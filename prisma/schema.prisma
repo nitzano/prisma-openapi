@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Order {
+  id       Int          @id @default(autoincrement())
+  petId    Int
+  quantity Int
+  shipDate DateTime?
+  status   OrderStatus?
+  complete Boolean?
+  pet      Pet          @relation(fields: [petId], references: [id])
+}
+
+enum OrderStatus {
+  placed
+  approved
+  delivered
+}
+
+model Category {
+  id   Int     @id @default(autoincrement())
+  name String?
+  pets Pet[]
+}
+
+model User {
+  id         Int     @id @default(autoincrement())
+  username   String  @unique
+  firstName  String?
+  lastName   String?
+  email      String?
+  password   String?
+  phone      String?
+  userStatus Int?
+}
+
+model Tag {
+  id   Int      @id @default(autoincrement())
+  name String?
+  pets PetTag[]
+}
+
+model Pet {
+  id         Int        @id @default(autoincrement())
+  name       String
+  categoryId Int?
+  status     PetStatus?
+  orders     Order[]
+  tags       PetTag[]
+  category   Category?  @relation(fields: [categoryId], references: [id])
+  photoUrls  PhotoUrl[]
+}
+
+model PetTag {
+  pet   Pet @relation(fields: [petId], references: [id])
+  petId Int
+  tag   Tag @relation(fields: [tagId], references: [id])
+  tagId Int
+
+  @@id([petId, tagId])
+}
+
+model PhotoUrl {
+  id    Int    @id @default(autoincrement())
+  url   String
+  pet   Pet    @relation(fields: [petId], references: [id])
+  petId Int
+}
+
+enum PetStatus {
+  available
+  pending
+  sold
+}
+
+model ApiResponse {
+  id      Int     @id @default(autoincrement())
+  code    Int?
+  type    String?
+  message String?
+}
