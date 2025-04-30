@@ -16,7 +16,7 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.ts": "xo"
+    "*.ts": "xo --fix"
   },
   "files": [
     "dist",
