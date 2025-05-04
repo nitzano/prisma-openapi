@@ -30,6 +30,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@changesets/cli": "^2.29.2",
     "@prisma/client": "^6.7.0",
     "@tsconfig/node22": "^22.0.1",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
