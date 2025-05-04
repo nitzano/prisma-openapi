@@ -1,4 +1,4 @@
-<h1 align="center">Prisma OpenAPI 🔄📝</h1>
+<h1 align="center">Prisma OpenAPI</h1>
 <h2 align="center">Generate OpenAPI schema from Prisma models</h2>
 
 <div align="center">
