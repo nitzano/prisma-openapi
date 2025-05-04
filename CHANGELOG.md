@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.1.3
+
+### Patch Changes
+
+- 09380ef: fix readme
+
 ## 1.1.2
 
 ### Patch Changes
