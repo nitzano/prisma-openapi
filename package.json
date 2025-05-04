@@ -17,7 +17,10 @@
     "lint": "xo",
     "lint:fix": "xo --fix",
     "format": "xo --fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "changeset:publish": "changeset publish"
   },
   "lint-staged": {
     "*.ts": "xo --fix"
@@ -30,8 +33,10 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@changesets/cli": "^2.29.2",
     "@prisma/client": "^6.7.0",
     "@tsconfig/node22": "^22.0.1",
+    "@types/node": "^22.15.3",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
     "husky": "^9.1.7",
