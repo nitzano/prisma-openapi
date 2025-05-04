@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - 7-release-100-with-changesets
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
