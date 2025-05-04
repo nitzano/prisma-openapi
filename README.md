@@ -19,7 +19,7 @@ A Prisma generator that automatically creates OpenAPI specifications from your P
 - [Examples](#examples)
   - [Basic Usage](#basic-usage)
   - [Custom Configuration](#custom-configuration)
-- [Configuration Options](#configuration-options)
+- [Configuration](#configuration)
 - [License](#license)
 
 ## Installation
@@ -187,7 +187,7 @@ generator openapi {
 }
 ```
 
-## Configuration Options
+## Configuration
 
 | Option | Description | Default |
 |--------|-------------|---------|
