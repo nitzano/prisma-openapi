@@ -1,0 +1,44 @@
+name: Release Package
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  packages: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  deploy_npm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "22"
+          cache: "pnpm"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Install dependencies
+        run: pnpm install
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Create and publish versions
+        uses: changesets/action@v1
+        with:
+          version: pnpm changeset:version
+          commit: "chore: update versions"
+          title: "chore: update versions"
+          publish: pnpm release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
