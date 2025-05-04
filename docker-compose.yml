@@ -1,0 +1,12 @@
+version: '3'
+services:
+  swagger-ui:
+    image: swaggerapi/swagger-ui:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./prisma/openapi:/usr/share/swagger-ui/spec
+    environment:
+      SWAGGER_JSON: /usr/share/swagger-ui/spec/openapi.yaml
+      BASE_URL: /
+    restart: unless-stopped
