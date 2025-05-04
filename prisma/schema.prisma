@@ -7,6 +7,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator openapi {
+  provider = "node ./dist/index.js"
+}
+
 model Order {
   id       Int          @id @default(autoincrement())
   petId    Int

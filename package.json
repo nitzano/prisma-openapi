@@ -2,13 +2,17 @@
   "name": "prisma-openapi",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "bin": {
+    "prisma-openapi": "./dist/cli.js"
+  },
   "type": "module",
   "exports": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "rimraf dist",
     "build": "tsc",
+    "generate": "prisma generate",
     "dev": "tsc --watch",
     "lint": "xo",
     "lint:fix": "xo --fix",
@@ -25,7 +29,7 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "devDependencies": {
+    "devDependencies": {
     "@prisma/client": "^6.7.0",
     "@tsconfig/node22": "^22.0.1",
     "husky": "^9.1.7",
