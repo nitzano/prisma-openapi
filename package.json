@@ -2,13 +2,17 @@
   "name": "prisma-openapi",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "bin": {
+    "prisma-openapi": "./dist/cli.js"
+  },
   "type": "module",
   "exports": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf dist prisma/openapi",
     "build": "tsc",
+    "generate": "prisma generate",
     "dev": "tsc --watch",
     "lint": "xo",
     "lint:fix": "xo --fix",
@@ -26,13 +30,23 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@prisma/client": "^6.7.0",
     "@tsconfig/node22": "^22.0.1",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.1",
+    "prisma": "^6.7.0",
     "rimraf": "^6.0.1",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",
     "xo": "^0.60.0"
   },
-  "packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39"
+  "packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39",
+  "dependencies": {
+    "@prisma/generator-helper": "^6.7.0",
+    "@prisma/internals": "^6.7.0",
+    "openapi3-ts": "^4.4.0",
+    "winston": "^3.17.0"
+  }
 }
