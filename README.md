@@ -104,6 +104,7 @@ model Post {
 
 Running `prisma generate` will create OpenAPI specifications for these models:
 
+
 ```yaml
 openapi: 3.1.0
 info:
