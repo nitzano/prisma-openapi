@@ -36,12 +36,11 @@ yarn add -D prisma-openapi
 ```
 
 ## Features
-
 - 🔄 **Automatic Generation**: Convert Prisma models to OpenAPI schemas with a single command
 - 🔍 **Type Safety**: Maintain type consistency between your database and API documentation
 - 🛠️ **Customizable**: Configure which models to include and set API metadata
 - 🧩 **Relationship Support**: Properly maps Prisma relationships to OpenAPI references
-
+- *️⃣ **Enum Support**: Full support for Prisma enums in your API documentation
 
 ## Usage
 
@@ -99,15 +98,78 @@ model Post {
   authorId  Int
 }
 
-model Profile {
-  id     Int    @id @default(autoincrement())
-  bio    String
-  user   User   @relation(fields: [userId], references: [id])
-  userId Int    @unique
 }
 ```
 
-Running `prisma generate` will create OpenAPI specifications for these models.
+
+Running `prisma generate` will create OpenAPI specifications for these models:
+
+```yaml
+openapi: 3.1.0
+info:
+  title: Prisma API
+  description: API generated from Prisma schema
+  version: 1.0.0
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        email:
+          type: string
+        name:
+          type: string
+        posts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+        profile:
+          $ref: '#/components/schemas/Profile'
+      required:
+        - id
+        - email
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        title:
+          type: string
+        content:
+          type: string
+        published:
+          type: boolean
+        author:
+          $ref: '#/components/schemas/User'
+        authorId:
+          type: integer
+          format: int32
+      required:
+        - id
+        - title
+        - published
+        - author
+        - authorId
+    Profile:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        userId:
+          type: integer
+          format: int32
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+        - id
+        - userId
+        - user
+```
 
 ### Custom Configuration
 
