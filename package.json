@@ -44,6 +44,8 @@
   "dependencies": {
     "@prisma/generator-helper": "^6.7.0",
     "@prisma/internals": "^6.7.0",
+    "@types/js-yaml": "^4.0.9",
+    "js-yaml": "^4.1.0",
     "winston": "^3.17.0"
   }
 }
