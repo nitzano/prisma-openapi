@@ -20,7 +20,6 @@
     "lint:fix": "xo --fix",
     "format": "xo --fix",
     "prepare": "husky",
-    "version": "changeset version",
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "changeset:publish": "changeset publish"
