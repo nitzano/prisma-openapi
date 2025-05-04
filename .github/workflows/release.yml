@@ -16,24 +16,16 @@ jobs:
   deploy_npm:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: "22"
           cache: "pnpm"
+      - run: pnpm install
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Install dependencies
-        run: pnpm install
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Create and publish versions
-        uses: changesets/action@v1
+      - uses: changesets/action@v1
         with:
           version: pnpm changeset:version
           commit: "chore: update versions"
