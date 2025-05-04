@@ -93,8 +93,6 @@ model Post {
   author    User     @relation(fields: [authorId], references: [id])
   authorId  Int
 }
-
-}
 ```
 
 
