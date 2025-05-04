@@ -1,12 +1,12 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import {cwd} from 'node:process';
+import type {GeneratorOptions} from '@prisma/generator-helper';
 import {
 	OpenApiBuilder,
 	type ReferenceObject,
 	type SchemaObject,
 } from 'openapi3-ts/oas31';
-import type {GeneratorOptions} from '@prisma/generator-helper';
 import logger from './services/logger.js';
 
 /**
@@ -72,21 +72,23 @@ function generateOpenApiSpec(
 
 	// Create schemas for all models
 	for (const model of models) {
-		builder.addSchema(model.name, {
+		const modelSchema: SchemaObject = {
 			type: 'object',
 			properties: generatePropertiesFromModel(model, models, enums),
 			required: model.fields
 				.filter((field) => field.isRequired)
 				.map((field) => field.name),
-		} as SchemaObject);
+		};
+		builder.addSchema(model.name, modelSchema);
 	}
 
 	// Add enum schemas
 	for (const enumType of enums) {
-		builder.addSchema(enumType.name, {
+		const enumSchema: SchemaObject = {
 			type: 'string',
 			enum: enumType.values.map((v) => v.name),
-		} as SchemaObject);
+		};
+		builder.addSchema(enumType.name, enumSchema);
 	}
 
 	return builder;
@@ -109,70 +111,72 @@ function generatePropertiesFromModel(
 		switch (field.kind) {
 			case 'scalar': {
 				// Map Prisma scalar types to OpenAPI types
-				property = {} as SchemaObject;
+				const scalarProperty: SchemaObject = {};
 				switch (field.type) {
 					case 'String': {
-						property.type = 'string';
+						scalarProperty.type = 'string';
 						break;
 					}
 
 					case 'Int': {
-						property.type = 'integer';
-						property.format = 'int32';
+						scalarProperty.type = 'integer';
+						scalarProperty.format = 'int32';
 						break;
 					}
 
 					case 'BigInt': {
-						property.type = 'integer';
-						property.format = 'int64';
+						scalarProperty.type = 'integer';
+						scalarProperty.format = 'int64';
 						break;
 					}
 
 					case 'Float':
 					case 'Decimal': {
-						property.type = 'number';
-						property.format = 'double';
+						scalarProperty.type = 'number';
+						scalarProperty.format = 'double';
 						break;
 					}
 
 					case 'Boolean': {
-						property.type = 'boolean';
+						scalarProperty.type = 'boolean';
 						break;
 					}
 
 					case 'DateTime': {
-						property.type = 'string';
-						property.format = 'date-time';
+						scalarProperty.type = 'string';
+						scalarProperty.format = 'date-time';
 						break;
 					}
 
 					case 'Json': {
-						property.type = 'object';
+						scalarProperty.type = 'object';
 						break;
 					}
 
 					case 'unsupported': {
-						property.type = 'string';
-						property.description = 'Unsupported type';
+						scalarProperty.type = 'string';
+						scalarProperty.description = 'Unsupported type';
 						break;
 					}
 
 					default: {
-						property.type = 'string';
-						property.description = 'Unknown type';
+						scalarProperty.type = 'string';
+						scalarProperty.description = 'Unknown type';
 						break;
 					}
 				}
 
+				property = scalarProperty;
 				break;
 			}
 
 			case 'enum': {
 				// Reference enum schema
-				property = {
+				const enumProperty: ReferenceObject = {
 					$ref: `#/components/schemas/${field.type}`,
-				} as ReferenceObject;
+				};
 
+				property = enumProperty;
 				break;
 			}
 
@@ -181,32 +185,36 @@ function generatePropertiesFromModel(
 				const relatedModel = allModels.find((m) => m.name === field.type);
 				if (relatedModel) {
 					if (field.isList) {
-						property = {
+						const listProperty: SchemaObject = {
 							type: 'array',
 							items: {
 								$ref: `#/components/schemas/${field.type}`,
-							} as ReferenceObject,
-						} as SchemaObject;
+							},
+						};
+						property = listProperty;
 					} else {
-						property = {
+						const referenceProperty: ReferenceObject = {
 							$ref: `#/components/schemas/${field.type}`,
-						} as ReferenceObject;
+						};
+						property = referenceProperty;
 					}
 				} else {
-					property = {
+					const unknownProperty: SchemaObject = {
 						type: 'object',
 						description: 'Unknown related model',
-					} as SchemaObject;
+					};
+					property = unknownProperty;
 				}
 
 				break;
 			}
 
 			default: {
-				property = {
+				const defaultProperty: SchemaObject = {
 					type: 'string',
 					description: 'Unknown field kind',
-				} as SchemaObject;
+				};
+				property = defaultProperty;
 			}
 		}
 
