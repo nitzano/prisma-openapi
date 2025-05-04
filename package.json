@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "bin": {
-    "prisma-openapi": "./dist/cli.js"
+    "prisma-openapi": "./dist/index.js"
   },
   "type": "module",
   "exports": "./dist/index.js",
