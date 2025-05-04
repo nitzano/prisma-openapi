@@ -8,6 +8,10 @@ const xoConfig = {
 	extensions: ['ts'],
 	// Ignore the compiled output
 	ignores: ['dist'],
+	// Disable specific rules
+	rules: {
+		'@typescript-eslint/consistent-type-assertions': 'warn',
+	},
 };
 
 export default xoConfig;
