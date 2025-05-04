@@ -38,14 +38,12 @@
     "rimraf": "^6.0.1",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",
-    "xo": "^0.60.0",
-    "@types/js-yaml": "^4.0.9"
+    "xo": "^0.60.0"
   },
   "packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39",
   "dependencies": {
     "@prisma/generator-helper": "^6.7.0",
     "@prisma/internals": "^6.7.0",
-    "js-yaml": "^4.1.0",
     "openapi3-ts": "^4.4.0",
     "winston": "^3.17.0"
   }
