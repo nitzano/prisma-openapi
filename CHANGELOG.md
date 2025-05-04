@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.1.2
+
+### Patch Changes
+
+- 349ce72: fix author and keywords
+
 ## 1.1.1
 
 ### Patch Changes
