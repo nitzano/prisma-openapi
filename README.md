@@ -27,11 +27,7 @@ A Prisma generator that automatically creates OpenAPI specifications from your P
 ```bash
 # npm
 npm install prisma-openapi --save-dev
-
-# pnpm
 pnpm add -D prisma-openapi
-
-# yarn
 yarn add -D prisma-openapi
 ```
 
