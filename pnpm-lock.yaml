@@ -14,12 +14,12 @@ importers:
       '@prisma/internals':
         specifier: ^6.7.0
         version: 6.7.0(typescript@5.8.3)
-      '@types/js-yaml':
-        specifier: ^4.0.9
-        version: 4.0.9
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
+      openapi3-ts:
+        specifier: ^4.4.0
+        version: 4.4.0
       winston:
         specifier: ^3.17.0
         version: 3.17.0
@@ -30,6 +30,9 @@ importers:
       '@tsconfig/node22':
         specifier: ^22.0.1
         version: 22.0.1
+      '@types/js-yaml':
+        specifier: ^4.0.9
+        version: 4.0.9
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -1864,6 +1867,9 @@ packages:
   open@10.1.2:
     resolution: {integrity: sha512-cxN6aIDPz6rm8hbebcP7vrQNhvRcveZoJU72Y7vskh4oIm+BZwBECnx5nTmrlres1Qapvx27Qo1Auukpf8PKXw==}
     engines: {node: '>=18'}
+
+  openapi3-ts@4.4.0:
+    resolution: {integrity: sha512-9asTNB9IkKEzWMcHmVZE7Ts3kC9G7AFHfs8i7caD8HbI76gEjdkId4z/AkP83xdZsH7PLAnnbl47qZkXuxpArw==}
 
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
@@ -4510,6 +4516,10 @@ snapshots:
       define-lazy-prop: 3.0.0
       is-inside-container: 1.0.0
       is-wsl: 3.1.0
+
+  openapi3-ts@4.4.0:
+    dependencies:
+      yaml: 2.7.1
 
   optionator@0.9.4:
     dependencies:
