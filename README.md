@@ -187,7 +187,7 @@ generator openapi {
 | Option | Description | Default |
 |--------|-------------|---------|
 | `output` | Output directory for OpenAPI schema | `./openapi` |
-| `title` | API title in OpenAPI spec | Project name from package.json |
+| `title` | API title in OpenAPI spec | "Prisma API" |
 | `description` | API description in OpenAPI spec | Empty string |
 | `includeModels` | Comma-separated list of models to include | All models |
 | `excludeModels` | Comma-separated list of models to exclude | None |

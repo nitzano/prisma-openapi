@@ -56,7 +56,7 @@ export type PrismaOpenApiOptions = {
  */
 export const defaultOptions: PrismaOpenApiOptions = {
 	output: './openapi',
-	title: 'Prisma API', // Will be overridden by package name if available
+	title: 'Prisma API',
 	description: '',
 	generateYaml: true,
 	generateJson: false,
