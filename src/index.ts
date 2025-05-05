@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import generatorHelper from '@prisma/generator-helper';
-import {onGenerate} from './on-generate.js';
+import {onGenerate} from './on-generate/index.js';
 import {onManifest} from './on-manifest.js';
 
 const {generatorHandler} = generatorHelper;

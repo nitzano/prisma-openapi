@@ -2,10 +2,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {getDMMF} from '@prisma/internals';
+import {type GeneratorOptions} from '@prisma/generator-helper';
 import {afterAll, beforeAll, describe, expect, it} from 'vitest';
 import yaml from 'yaml';
-import {type GeneratorOptions} from '@prisma/generator-helper';
-import {onGenerate} from '../src/on-generate.js';
+import {onGenerate} from '../src/on-generate/on-generate.js';
 
 // Get the directory name of the current module
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
