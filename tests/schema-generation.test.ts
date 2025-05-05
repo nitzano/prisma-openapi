@@ -45,6 +45,8 @@ describe('Prisma to OpenAPI generation', () => {
 			dmmf,
 			datasources: [],
 			schemaPath: '',
+			datamodel: schema, // Add the schema content as datamodel
+			version: '0.0.0', // Add a version string
 			generator: {
 				name: 'openapi',
 				provider: {
@@ -56,6 +58,9 @@ describe('Prisma to OpenAPI generation', () => {
 					fromEnvVar: null,
 				},
 				config: {},
+				binaryTargets: [],
+				previewFeatures: [],
+				sourceFilePath: schemaPath,
 			},
 			otherGenerators: [],
 		};
