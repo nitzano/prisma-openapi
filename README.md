@@ -177,8 +177,8 @@ generator openapi {
   includeModels = "User,Post"
   excludeModels = "Passwords"
   generateYaml  = true
-  generateJSON  = false
-  generateJSDoc = false
+  generateJson  = false
+  generateJsDoc = false
 }
 ```
 
@@ -191,9 +191,9 @@ generator openapi {
 | `description` | API description in OpenAPI spec | Empty string |
 | `includeModels` | Comma-separated list of models to include | All models |
 | `excludeModels` | Comma-separated list of models to exclude | None |
-| `generateYAML` | Generate YAML format | `true` |
-| `generateJSON` | Generate JSON format | `false` |
-| `generateJSDoc` | Include JSDoc comments in the schema | `false` |
+| `generateYaml` | Generate YAML format | `true` |
+| `generateJson` | Generate JSON format | `false` |
+| `generateJsDoc` | Include JSDoc comments in the schema | `false` |
 
 
 
