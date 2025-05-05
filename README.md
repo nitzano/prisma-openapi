@@ -178,7 +178,7 @@ generator openapi {
   excludeModels = "Passwords"
   generateYaml  = true
   generateJSON  = false
-  generateJSDoc  = false
+  generateJSDoc = false
 }
 ```
 
