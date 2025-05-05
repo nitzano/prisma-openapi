@@ -4,6 +4,7 @@ import {fileURLToPath} from 'node:url';
 import {getDMMF} from '@prisma/internals';
 import {afterAll, beforeAll, describe, expect, it} from 'vitest';
 import yaml from 'yaml';
+import {type GeneratorOptions} from '@prisma/generator-helper';
 import {onGenerate} from '../src/on-generate.js';
 
 // Get the directory name of the current module
@@ -40,7 +41,7 @@ describe('Prisma to OpenAPI generation', () => {
 		const dmmf = await getDMMF({datamodel: schema});
 
 		// Create mock generator options required by onGenerate
-		const options = {
+		const options: GeneratorOptions = {
 			dmmf,
 			datasources: [],
 			schemaPath: '',
