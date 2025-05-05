@@ -35,6 +35,7 @@ jobs:
           - run: pnpm install
           - run: pnpm test      
   build:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
