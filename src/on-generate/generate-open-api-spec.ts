@@ -1,4 +1,3 @@
-// Filepath: /home/nitzano/work/prisma-openapi/src/on-generate/generate-open-api-spec.ts
 import type {GeneratorOptions} from '@prisma/generator-helper';
 import {OpenApiBuilder, type SchemaObject} from 'openapi3-ts/oas31';
 import {generatePropertiesFromModel} from './generate-properties-from-model.js';

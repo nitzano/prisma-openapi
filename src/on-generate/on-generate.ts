@@ -1,4 +1,3 @@
-// Filepath: /home/nitzano/work/prisma-openapi/src/on-generate/index.ts
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import {cwd} from 'node:process';

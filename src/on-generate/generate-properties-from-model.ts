@@ -1,4 +1,3 @@
-// Filepath: /home/nitzano/work/prisma-openapi/src/on-generate/generate-properties-from-model.ts
 import type {GeneratorOptions} from '@prisma/generator-helper';
 import {type ReferenceObject, type SchemaObject} from 'openapi3-ts/oas31';
 
