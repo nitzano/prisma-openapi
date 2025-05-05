@@ -2,10 +2,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {getDMMF} from '@prisma/internals';
+import {type GeneratorOptions} from '@prisma/generator-helper';
 import {afterAll, beforeAll, describe, expect, it} from 'vitest';
 import yaml from 'yaml';
-import {type GeneratorOptions} from '@prisma/generator-helper';
-import {onGenerate} from '../src/on-generate.js';
+import {onGenerate} from '../src/on-generate/on-generate.js';
 
 // Get the directory name of the current module
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -112,5 +112,137 @@ describe('Prisma to OpenAPI generation', () => {
 		expect(userSchema.properties.profile.$ref).toBe(
 			'#/components/schemas/Profile',
 		);
+	});
+});
+
+describe('Custom output directory', () => {
+	// Use test directories under the test folder to avoid permission issues
+	const testBaseDirectory = path.join(__dirname, 'temp');
+	const customOutputDirectory = path.join(testBaseDirectory, 'custom-output');
+	const configOutputDirectory = path.join(testBaseDirectory, 'config-output');
+
+	// Clean up directories before and after tests
+	beforeAll(() => {
+		// Create base test directory if it doesn't exist
+		if (!fs.existsSync(testBaseDirectory)) {
+			fs.mkdirSync(testBaseDirectory, {recursive: true});
+		}
+	});
+
+	afterAll(() => {
+		// Clean up test directories
+		if (fs.existsSync(customOutputDirectory)) {
+			fs.rmSync(customOutputDirectory, {recursive: true, force: true});
+		}
+
+		if (fs.existsSync(configOutputDirectory)) {
+			fs.rmSync(configOutputDirectory, {recursive: true, force: true});
+		}
+
+		if (fs.existsSync(testBaseDirectory)) {
+			fs.rmSync(testBaseDirectory, {recursive: true, force: true});
+		}
+	});
+
+	it('supports custom output directory from options', async () => {
+		// Load the test schema file
+		const schemaPath = path.join(__dirname, 'fixtures', 'simple.prisma');
+		const schema = fs.readFileSync(schemaPath, 'utf8');
+
+		// Parse the schema using Prisma's internals
+		const dmmf = await getDMMF({datamodel: schema});
+
+		// Create mock generator options required by onGenerate
+		const options: GeneratorOptions = {
+			dmmf,
+			datasources: [],
+			schemaPath: '',
+			datamodel: schema,
+			version: '0.0.0',
+			generator: {
+				name: 'openapi',
+				provider: {
+					value: 'prisma-openapi',
+					fromEnvVar: null,
+				},
+				output: {
+					value: customOutputDirectory,
+					fromEnvVar: null,
+				},
+				config: {
+					// Also include output in config to verify it's not used when generator.output is present
+					output: configOutputDirectory,
+				} satisfies Record<string, unknown>,
+				binaryTargets: [],
+				previewFeatures: [],
+				sourceFilePath: schemaPath,
+			},
+			otherGenerators: [],
+		};
+
+		// Generate OpenAPI spec
+		await onGenerate(options);
+
+		// Verify that the YAML file was written to the custom directory
+		const expectedYamlPath = path.join(customOutputDirectory, 'openapi.yaml');
+		expect(fs.existsSync(expectedYamlPath)).toBe(true);
+
+		// Verify the content of the YAML file
+		const generatedOpenApi = yaml.parse(
+			fs.readFileSync(expectedYamlPath, 'utf8'),
+		) as Record<string, unknown>;
+		expect(generatedOpenApi).toBeDefined();
+		expect(generatedOpenApi.openapi).toBe('3.1.0');
+
+		// Verify config output directory was not used
+		const configYamlPath = path.join(configOutputDirectory, 'openapi.yaml');
+		expect(fs.existsSync(configYamlPath)).toBe(false);
+	});
+
+	it('falls back to config output when generator output is not provided', async () => {
+		// Load the test schema file
+		const schemaPath = path.join(__dirname, 'fixtures', 'simple.prisma');
+		const schema = fs.readFileSync(schemaPath, 'utf8');
+
+		// Parse the schema using Prisma's internals
+		const dmmf = await getDMMF({datamodel: schema});
+
+		// Create mock generator options required by onGenerate
+		const options: GeneratorOptions = {
+			dmmf,
+			datasources: [],
+			schemaPath: '',
+			datamodel: schema,
+			version: '0.0.0',
+			generator: {
+				name: 'openapi',
+				provider: {
+					value: 'prisma-openapi',
+					fromEnvVar: null,
+				},
+				output: null, // No generator.output
+				config: {
+					output: configOutputDirectory,
+				} satisfies Record<string, unknown>,
+				binaryTargets: [],
+				previewFeatures: [],
+				sourceFilePath: schemaPath,
+			},
+			otherGenerators: [],
+		};
+
+		// Generate OpenAPI spec
+		await onGenerate(options);
+
+		// Verify that the YAML file was written to the config directory
+		const expectedYamlPath = path.join(configOutputDirectory, 'openapi.yaml');
+		expect(fs.existsSync(expectedYamlPath)).toBe(true);
+
+		// Verify the content of the YAML file
+		const generatedOpenApi = yaml.parse(
+			fs.readFileSync(expectedYamlPath, 'utf8'),
+		) as Record<string, unknown>;
+		expect(generatedOpenApi).toBeDefined();
+		expect(generatedOpenApi.openapi).toBe('3.1.0');
 	});
 });
