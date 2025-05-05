@@ -13,8 +13,8 @@
 
 A Prisma generator that automatically creates OpenAPI specifications from your Prisma schema. Seamlessly integrate your database models with API documentation without writing any additional code.
 
-- [Installation](#installation)
 - [Features](#features)
+- [Setup](#setup)
 - [Usage](#usage)
 - [Examples](#examples)
   - [Basic Usage](#basic-usage)
@@ -22,14 +22,6 @@ A Prisma generator that automatically creates OpenAPI specifications from your P
 - [Configuration](#configuration)
 - [License](#license)
 
-## Installation
-
-```bash
-# npm
-npm install prisma-openapi --save-dev
-pnpm add -D prisma-openapi
-yarn add -D prisma-openapi
-```
 
 ## Features
 - 🔄 **Automatic Generation**: Convert Prisma models to OpenAPI schemas with a single command
@@ -37,6 +29,14 @@ yarn add -D prisma-openapi
 - 🛠️ **Customizable**: Configure which models to include and set API metadata
 - 🧩 **Relationship Support**: Properly maps Prisma relationships to OpenAPI references
 - *️⃣ **Enum Support**: Full support for Prisma enums in your API documentation
+
+## Setup
+
+```bash
+npm install prisma-openapi --save-dev
+pnpm add -D prisma-openapi
+yarn add -D prisma-openapi
+```
 
 ## Usage
 
@@ -178,7 +178,7 @@ generator openapi {
   excludeModels = "Passwords"
   generateYaml  = true
   generateJSON  = false
-  generateJSDoc  = false
+  generateJSDoc = false
 }
 ```
 
