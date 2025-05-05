@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.1.6
+
+### Patch Changes
+
+- e119787: allow to change output directory
+
 ## 1.1.5
 
 ### Patch Changes
