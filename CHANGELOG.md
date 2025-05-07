@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.1.7
+
+### Patch Changes
+
+- 02b206f: title support
+
 ## 1.1.6
 
 ### Patch Changes
