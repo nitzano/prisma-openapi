@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.2.0
+
+### Minor Changes
+
+- 4bd6ca1: add jsdoc support
+
 ## 1.1.7
 
 ### Patch Changes
