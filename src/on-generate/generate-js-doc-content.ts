@@ -8,40 +8,35 @@ export function generateJsDocumentContent(
 	filteredModels: GeneratorOptions['dmmf']['datamodel']['models'],
 	enums: GeneratorOptions['dmmf']['datamodel']['enums'],
 ): string {
-	// Create JSDoc OpenAPI content
+	// Create JSDoc OpenAPI content with a single block
 	let jsDocumentContent = `/**
  * @openapi
  * components:
- *   schemas:
- */\n\n`;
+ *   schemas:`;
 
 	// Add schemas for models
 	for (const model of filteredModels) {
-		jsDocumentContent += `/**
- * @openapi
- * components:
- *   schemas:
+		jsDocumentContent += `
  *     ${model.name}:
  *       type: object
  *       properties:
- *${generateModelProperties(model)}
+${generateModelProperties(model)}
  *       required:
- *${generateRequiredProperties(model)}
- */\n\n`;
+${generateRequiredProperties(model)}`;
 	}
 
 	// Add enum schemas
 	for (const enumType of enums) {
-		jsDocumentContent += `/**
- * @openapi
- * components:
- *   schemas:
+		jsDocumentContent += `
  *     ${enumType.name}:
  *       type: string
  *       enum:
- *${generateEnumValues(enumType)}
- */\n\n`;
+${generateEnumValues(enumType)}`;
 	}
+
+	// Close the JSDoc block
+	jsDocumentContent += `
+ */\n`;
 
 	return jsDocumentContent;
 }
