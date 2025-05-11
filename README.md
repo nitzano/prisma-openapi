@@ -88,7 +88,6 @@ model User {
   email     String   @unique
   name      String?
   posts     Post[]
-  profile   Profile?
 }
 
 model Post {
@@ -127,8 +126,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Post'
-        profile:
-          $ref: '#/components/schemas/Profile'
       required:
         - id
         - email
@@ -155,21 +152,6 @@ components:
         - published
         - author
         - authorId
-    Profile:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        userId:
-          type: integer
-          format: int32
-        user:
-          $ref: '#/components/schemas/User'
-      required:
-        - id
-        - userId
-        - user
 ```
 
 ### Custom Configuration
