@@ -30,7 +30,7 @@ describe('JSDoc Generation', () => {
 		}
 
 		if (fs.existsSync(jsDocumentOutputDirectory)) {
-			fs.rmdirSync(jsDocumentOutputDirectory);
+			fs.rmSync(jsDocumentOutputDirectory, {recursive: true, force: true});
 		}
 	});
 

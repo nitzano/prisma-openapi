@@ -9,5 +9,8 @@ export default defineConfig({
 			reporter: ['text', 'json', 'html'],
 		},
 		globals: true,
+		typecheck: {
+			tsconfig: './tsconfig.test.json',
+		},
 	},
 });
