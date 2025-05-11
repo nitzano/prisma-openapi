@@ -19,12 +19,8 @@ A Prisma generator that automatically creates OpenAPI specifications from your P
 - [Examples](#examples)
   - [Basic Usage](#basic-usage)
   - [Custom Configuration](#custom-configuration)
+  - [JSDoc Integration](#jsdoc-integration)
 - [Configuration](#configuration)
-- [JSDoc Integration](#jsdoc-integration)
-  - [Setting up JSDoc Generation](#setting-up-jsdoc-generation)
-  - [Example JSDoc Output](#example-jsdoc-output)
-  - [Prisma Model](#prisma-model)
-  - [Generated OpenAPI Schema (YAML)](#generated-openapi-schema-yaml)
 - [License](#license)
 
 
@@ -170,24 +166,9 @@ generator openapi {
 }
 ```
 
-## Configuration
-
-| Option | Description | Default |
-|--------|-------------|---------|
-| `output` | Output directory for OpenAPI schema | `./openapi` |
-| `title` | API title in OpenAPI spec | "Prisma API" |
-| `description` | API description in OpenAPI spec | Empty string |
-| `includeModels` | Comma-separated list of models to include | All models |
-| `excludeModels` | Comma-separated list of models to exclude | None |
-| `generateYaml` | Generate YAML format | `true` |
-| `generateJson` | Generate JSON format | `false` |
-| `generateJsDoc` | Include JSDoc comments in the schema | `false` |
-
-## JSDoc Integration
+### JSDoc Integration
 
 When `generateJsDoc` is enabled, prisma-openapi will generate a JavaScript file containing OpenAPI-compatible JSDoc comments. This can be integrated with tools like [swagger-jsdoc](https://www.npmjs.com/package/swagger-jsdoc) to combine your API route documentation with your Prisma model definitions.
-
-### Setting up JSDoc Generation
 
 ```prisma
 generator openapi {
@@ -196,8 +177,6 @@ generator openapi {
   generateJsDoc = true
 }
 ```
-
-### Example JSDoc Output
 
 The generated JSDoc comments can be imported into your API documentation workflow:
 
@@ -225,59 +204,18 @@ The generated JSDoc comments can be imported into your API documentation workflo
  */
 ```
 
+## Configuration
 
-
-### Prisma Model
-
-```prisma
-model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  role    Role     @default(USER)
-  posts   Post[]
-  profile Profile?
-}
-
-enum Role {
-  USER
-  ADMIN
-}
-```
-
-### Generated OpenAPI Schema (YAML)
-
-```yaml
-components:
-  schemas:
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        email:
-          type: string
-        name:
-          type: string
-        role:
-          $ref: '#/components/schemas/Role'
-        posts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Post'
-        profile:
-          $ref: '#/components/schemas/Profile'
-      required:
-        - id
-        - email
-        - role
-    Role:
-      type: string
-      enum:
-        - USER
-        - ADMIN
-```
+| Option | Description | Default |
+|--------|-------------|---------|
+| `output` | Output directory for OpenAPI schema | `./openapi` |
+| `title` | API title in OpenAPI spec | "Prisma API" |
+| `description` | API description in OpenAPI spec | Empty string |
+| `includeModels` | Comma-separated list of models to include | All models |
+| `excludeModels` | Comma-separated list of models to exclude | None |
+| `generateYaml` | Generate YAML format | `true` |
+| `generateJson` | Generate JSON format | `false` |
+| `generateJsDoc` | Include JSDoc comments in the schema | `false` |
 
 ## License
 
