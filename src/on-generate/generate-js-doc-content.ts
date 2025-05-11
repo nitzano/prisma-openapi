@@ -19,10 +19,7 @@ export function generateJsDocumentContent(
 		jsDocumentContent += `
  *     ${model.name}:
  *       type: object
- *       properties:
-${generateModelProperties(model)}
- *       required:
-${generateRequiredProperties(model)}`;
+ *       properties:${generateModelProperties(model).trimEnd()} *       required:${generateRequiredProperties(model)}`;
 	}
 
 	// Add enum schemas
@@ -30,8 +27,7 @@ ${generateRequiredProperties(model)}`;
 		jsDocumentContent += `
  *     ${enumType.name}:
  *       type: string
- *       enum:
-${generateEnumValues(enumType)}`;
+ *       enum:${generateEnumValues(enumType)}`;
 	}
 
 	// Close the JSDoc block
