@@ -35,9 +35,30 @@ export async function onGenerate(options: GeneratorOptions) {
 			...generatorConfig,
 		};
 
+		// Filter models based on includeModels and excludeModels options
+		let filteredModels = [...dmmf.datamodel.models];
+		const includeModelsList = parseCommaSeparatedList(
+			prismaOpenApiOptions.includeModels,
+		);
+		const excludeModelsList = parseCommaSeparatedList(
+			prismaOpenApiOptions.excludeModels,
+		);
+
+		if (includeModelsList && includeModelsList.length > 0) {
+			filteredModels = filteredModels.filter((model) =>
+				includeModelsList.includes(model.name),
+			);
+		}
+
+		if (excludeModelsList && excludeModelsList.length > 0) {
+			filteredModels = filteredModels.filter(
+				(model) => !excludeModelsList.includes(model.name),
+			);
+		}
+
 		// Generate OpenAPI specification
 		const openApiBuilder = generateOpenApiSpec(
-			dmmf.datamodel.models,
+			filteredModels,
 			dmmf.datamodel.enums,
 			prismaOpenApiOptions,
 		);
@@ -70,27 +91,6 @@ export async function onGenerate(options: GeneratorOptions) {
 
 		// Write JSDoc file if enabled
 		if (prismaOpenApiOptions.generateJsDoc) {
-			// Filter models based on includeModels and excludeModels options
-			let filteredModels = [...dmmf.datamodel.models];
-			const includeModelsList = parseCommaSeparatedList(
-				prismaOpenApiOptions.includeModels,
-			);
-			const excludeModelsList = parseCommaSeparatedList(
-				prismaOpenApiOptions.excludeModels,
-			);
-
-			if (includeModelsList && includeModelsList.length > 0) {
-				filteredModels = filteredModels.filter((model) =>
-					includeModelsList.includes(model.name),
-				);
-			}
-
-			if (excludeModelsList && excludeModelsList.length > 0) {
-				filteredModels = filteredModels.filter(
-					(model) => !excludeModelsList.includes(model.name),
-				);
-			}
-
 			const jsDocumentPath = path.join(outputDirectory, 'openapi.js');
 			const jsDocumentContent = generateJsDocumentContent(
 				dmmf.datamodel.models,
