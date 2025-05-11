@@ -34,6 +34,7 @@ A Prisma generator that automatically creates OpenAPI specifications from your P
 - 🛠️ **Customizable**: Configure which models to include and set API metadata
 - 🧩 **Relationship Support**: Properly maps Prisma relationships to OpenAPI references
 - *️⃣ **Enum Support**: Full support for Prisma enums in your API documentation
+- 📝 **JSDoc Generation**: Create JSDoc comments for your TypeScript types based on the Prisma schema
 
 ## Setup
 
