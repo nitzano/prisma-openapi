@@ -20,6 +20,11 @@ A Prisma generator that automatically creates OpenAPI specifications from your P
   - [Basic Usage](#basic-usage)
   - [Custom Configuration](#custom-configuration)
 - [Configuration](#configuration)
+- [JSDoc Integration](#jsdoc-integration)
+  - [Setting up JSDoc Generation](#setting-up-jsdoc-generation)
+  - [Example JSDoc Output](#example-jsdoc-output)
+  - [Prisma Model](#prisma-model)
+  - [Generated OpenAPI Schema (YAML)](#generated-openapi-schema-yaml)
 - [License](#license)
 
 
@@ -195,7 +200,101 @@ generator openapi {
 | `generateJson` | Generate JSON format | `false` |
 | `generateJsDoc` | Include JSDoc comments in the schema | `false` |
 
+## JSDoc Integration
 
+When `generateJsDoc` is enabled, prisma-openapi will generate a JavaScript file containing OpenAPI-compatible JSDoc comments. This can be integrated with tools like [swagger-jsdoc](https://www.npmjs.com/package/swagger-jsdoc) to combine your API route documentation with your Prisma model definitions.
+
+### Setting up JSDoc Generation
+
+```prisma
+generator openapi {
+  provider      = "prisma-openapi"
+  output        = "./openapi"
+  generateJsDoc = true
+}
+```
+
+### Example JSDoc Output
+
+The generated JSDoc comments can be imported into your API documentation workflow:
+
+```javascript
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *         email:
+ *           type: string
+ *         name:
+ *           type: string
+ *         posts:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Post'
+ *       required:
+ *         - id
+ *         - email
+ */
+```
+
+
+
+### Prisma Model
+
+```prisma
+model User {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String?
+  role    Role     @default(USER)
+  posts   Post[]
+  profile Profile?
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+```
+
+### Generated OpenAPI Schema (YAML)
+
+```yaml
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        email:
+          type: string
+        name:
+          type: string
+        role:
+          $ref: '#/components/schemas/Role'
+        posts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+        profile:
+          $ref: '#/components/schemas/Profile'
+      required:
+        - id
+        - email
+        - role
+    Role:
+      type: string
+      enum:
+        - USER
+        - ADMIN
+```
 
 ## License
 
