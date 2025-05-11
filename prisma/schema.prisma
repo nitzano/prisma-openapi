@@ -9,6 +9,7 @@ datasource db {
 
 generator openapi {
   provider = "node ./dist/index.js"
+  generateJsDoc = true
 }
 
 model Order {

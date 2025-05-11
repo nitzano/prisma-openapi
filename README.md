@@ -4,10 +4,10 @@
 <div align="center">
 
 [![npm](https://img.shields.io/npm/v/prisma-openapi)](https://www.npmjs.com/package/prisma-openapi)
-[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
 [![GitHub Repo stars](https://img.shields.io/github/stars/nitzano/prisma-openapi?style=flat)](https://github.com/nitzano/prisma-openapi/stargazers)
-![GitHub License](https://img.shields.io/github/license/nitzano/prisma-openapi)
 ![npm](https://img.shields.io/npm/dw/prisma-openapi)
+![GitHub License](https://img.shields.io/github/license/nitzano/prisma-openapi)
+[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
 
 </div>
 
@@ -19,6 +19,7 @@ A Prisma generator that automatically creates OpenAPI specifications from your P
 - [Examples](#examples)
   - [Basic Usage](#basic-usage)
   - [Custom Configuration](#custom-configuration)
+  - [JSDoc Integration](#jsdoc-integration)
 - [Configuration](#configuration)
 - [License](#license)
 
@@ -29,11 +30,12 @@ A Prisma generator that automatically creates OpenAPI specifications from your P
 - 🛠️ **Customizable**: Configure which models to include and set API metadata
 - 🧩 **Relationship Support**: Properly maps Prisma relationships to OpenAPI references
 - *️⃣ **Enum Support**: Full support for Prisma enums in your API documentation
+- 📝 **JSDoc Generation**: Create JSDoc comments for your TypeScript types based on the Prisma schema
 
 ## Setup
 
 ```bash
-npm install prisma-openapi --save-dev
+npm i -D prisma-openapi
 pnpm add -D prisma-openapi
 yarn add -D prisma-openapi
 ```
@@ -82,7 +84,6 @@ model User {
   email     String   @unique
   name      String?
   posts     Post[]
-  profile   Profile?
 }
 
 model Post {
@@ -121,8 +122,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Post'
-        profile:
-          $ref: '#/components/schemas/Profile'
       required:
         - id
         - email
@@ -149,21 +148,6 @@ components:
         - published
         - author
         - authorId
-    Profile:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        userId:
-          type: integer
-          format: int32
-        user:
-          $ref: '#/components/schemas/User'
-      required:
-        - id
-        - userId
-        - user
 ```
 
 ### Custom Configuration
@@ -182,6 +166,44 @@ generator openapi {
 }
 ```
 
+### JSDoc Integration
+
+When `generateJsDoc` is enabled, prisma-openapi will generate a JavaScript file containing OpenAPI-compatible JSDoc comments. This can be integrated with tools like [swagger-jsdoc](https://www.npmjs.com/package/swagger-jsdoc) to combine your API route documentation with your Prisma model definitions.
+
+```prisma
+generator openapi {
+  provider      = "prisma-openapi"
+  output        = "./openapi"
+  generateJsDoc = true
+}
+```
+
+The generated JSDoc comments can be imported into your API documentation workflow:
+
+```javascript
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *         email:
+ *           type: string
+ *         name:
+ *           type: string
+ *         posts:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Post'
+ *       required:
+ *         - id
+ *         - email
+ */
+```
+
 ## Configuration
 
 | Option | Description | Default |
@@ -194,8 +216,6 @@ generator openapi {
 | `generateYaml` | Generate YAML format | `true` |
 | `generateJson` | Generate JSON format | `false` |
 | `generateJsDoc` | Include JSDoc comments in the schema | `false` |
-
-
 
 ## License
 
