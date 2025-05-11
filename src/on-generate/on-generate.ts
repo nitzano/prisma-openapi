@@ -3,10 +3,12 @@ import * as path from 'node:path';
 import {cwd} from 'node:process';
 import type {GeneratorOptions} from '@prisma/generator-helper';
 import logger from '../services/logger.js';
+import {generateJsDocumentContent} from './generate-js-doc-content.js';
 import {generateOpenApiSpec} from './generate-open-api-spec.js';
 import {
 	type PrismaOpenApiOptions,
 	defaultOptions,
+	parseCommaSeparatedList,
 } from './generator-options.js';
 
 /**
@@ -64,6 +66,39 @@ export async function onGenerate(options: GeneratorOptions) {
 			const jsonContent = openApiBuilder.getSpecAsJson();
 			fs.writeFileSync(jsonPath, jsonContent);
 			logger.info(`OpenAPI JSON specification written to ${jsonPath}`);
+		}
+
+		// Write JSDoc file if enabled
+		if (prismaOpenApiOptions.generateJsDoc) {
+			// Filter models based on includeModels and excludeModels options
+			let filteredModels = [...dmmf.datamodel.models];
+			const includeModelsList = parseCommaSeparatedList(
+				prismaOpenApiOptions.includeModels,
+			);
+			const excludeModelsList = parseCommaSeparatedList(
+				prismaOpenApiOptions.excludeModels,
+			);
+
+			if (includeModelsList && includeModelsList.length > 0) {
+				filteredModels = filteredModels.filter((model) =>
+					includeModelsList.includes(model.name),
+				);
+			}
+
+			if (excludeModelsList && excludeModelsList.length > 0) {
+				filteredModels = filteredModels.filter(
+					(model) => !excludeModelsList.includes(model.name),
+				);
+			}
+
+			const jsDocumentPath = path.join(outputDirectory, 'openapi.js');
+			const jsDocumentContent = generateJsDocumentContent(
+				dmmf.datamodel.models,
+				filteredModels,
+				dmmf.datamodel.enums,
+			);
+			fs.writeFileSync(jsDocumentPath, jsDocumentContent);
+			logger.info(`OpenAPI JSDoc specification written to ${jsDocumentPath}`);
 		}
 
 		logger.info('OpenAPI generation completed successfully');
