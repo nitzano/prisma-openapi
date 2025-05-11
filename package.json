@@ -14,6 +14,7 @@
   "scripts": {
     "clean": "rimraf dist prisma/openapi",
     "build": "tsc",
+    "dev:gen": "pnpm clean && pnpm build && pnpm generate",
     "generate": "prisma generate",
     "dev": "tsc --watch",
     "lint": "xo",

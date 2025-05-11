@@ -78,7 +78,7 @@ function generateModelProperties(
 					}
 
 					case 'DateTime': {
-						propertyType = 'string\\n *         format: date-time';
+						propertyType = 'string\n *           format: date-time';
 						break;
 					}
 
@@ -96,14 +96,25 @@ function generateModelProperties(
 			}
 
 			case 'enum': {
-				propertyType = `\\n *         $ref: '#/components/schemas/${field.type}'`;
+				propertyType =
+					"string\n *           $ref: '#/components/schemas/" +
+					field.type +
+					"'";
 				break;
 			}
 
 			case 'object': {
-				propertyType = field.isList
-					? `array\\n *         items:\\n *           $ref: '#/components/schemas/${field.type}'`
-					: `\\n *         $ref: '#/components/schemas/${field.type}'`;
+				if (field.isList) {
+					propertyType =
+						"array\n *           items:\n *             $ref: '#/components/schemas/" +
+						field.type +
+						"'";
+				} else {
+					propertyType =
+						"object\n *           $ref: '#/components/schemas/" +
+						field.type +
+						"'";
+				}
 
 				break;
 			}
@@ -114,7 +125,7 @@ function generateModelProperties(
 		}
 
 		// Add property description
-		properties += ` *         ${field.name}:\\n *           type: ${propertyType}\n`;
+		properties += ` *         ${field.name}:\n *           type: ${propertyType}\n`;
 	}
 
 	return properties;
