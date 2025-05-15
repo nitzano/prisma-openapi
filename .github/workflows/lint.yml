@@ -2,12 +2,9 @@ name: Test
 
 on:
   push:
-    branches: 
+    branches:
       - main
-      - changeset-release/main
   pull_request:
-    branches: [main]
-  workflow_dispatch:
 
 jobs:
   lint:
@@ -36,7 +33,7 @@ jobs:
           node-version: "22"
           cache: "pnpm"
       - run: pnpm install
-      - run: pnpm test      
+      - run: pnpm test
   build:
     needs: lint
     runs-on: ubuntu-latest
