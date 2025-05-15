@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.2.4
+
+### Patch Changes
+
+- f2485b4: test
+
 ## 1.2.3
 
 ### Patch Changes
