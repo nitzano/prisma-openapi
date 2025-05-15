@@ -2,4 +2,4 @@
 "prisma-openapi": patch
 ---
 
-bunp
+bump
