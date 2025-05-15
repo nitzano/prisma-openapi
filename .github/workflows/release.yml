@@ -21,7 +21,7 @@ jobs:
       - run: pnpm build
       - uses: changesets/action@v1
         with:
-          # version: pnpm changeset:version
+          version: pnpm changeset:version
           # commit: "chore: update versions"
           # title: "chore: update versions"
           publish: pnpm changeset:publish
