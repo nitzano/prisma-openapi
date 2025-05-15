@@ -2,7 +2,7 @@
   "name": "prisma-openapi",
   "author": "Nitzan Ohana <16689354+nitzano@users.noreply.github.com>",
   "repository": "git@github.com:nitzano/prisma-openapi.git",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "",
   "main": "dist/index.js",
   "bin": {

@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.2.1
+
+### Patch Changes
+
+- f78f249: bump version
+
 ## 1.2.0
 
 ### Minor Changes
