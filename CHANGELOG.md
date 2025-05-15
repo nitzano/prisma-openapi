@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.2.2
+
+### Patch Changes
+
+- 559f446: bunp
+
 ## 1.2.1
 
 ### Patch Changes
