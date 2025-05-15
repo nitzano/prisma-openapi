@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.2.3
+
+### Patch Changes
+
+- ef5af4d: release test
+
 ## 1.2.2
 
 ### Patch Changes
