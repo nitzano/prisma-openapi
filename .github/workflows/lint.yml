@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - main
-      - "!changeset-release/main"
   pull_request:
     branches:
       - main
-      - "!changeset-release/main"
 
 jobs:
   lint:
