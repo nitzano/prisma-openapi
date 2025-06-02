@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.3.1
+
+### Patch Changes
+
+- be41fa3: docs
+
 ## 1.3.0
 
 ### Minor Changes
