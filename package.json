@@ -24,8 +24,6 @@
     "dev:release": "changeset",
     "psst": "psst-ai -f ./.github/copilot-instructions.md",
     "ver": "changeset",
-    "changeset:version": "changeset version",
-    "changeset:publish": "changeset publish",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
