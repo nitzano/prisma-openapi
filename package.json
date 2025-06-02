@@ -22,8 +22,8 @@
     "format": "xo --fix",
     "prepare": "husky",
     "dev:release": "changeset",
-    "changeset:version": "changeset version",
-    "changeset:publish": "changeset publish",
+    "psst": "psst-ai -f ./.github/copilot-instructions.md",
+    "ver": "changeset",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
@@ -53,6 +53,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^15.5.1",
     "prisma": "^6.7.0",
+    "psst-ai": "^1.4.0",
     "rimraf": "^6.0.1",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",

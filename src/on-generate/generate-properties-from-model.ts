@@ -126,7 +126,7 @@ export function generatePropertiesFromModel(
 		}
 
 		// Add description if available
-		if (field.documentation && 'description' in property) {
+		if (field.documentation && !('$ref' in property)) {
 			property.description = field.documentation;
 		}
 

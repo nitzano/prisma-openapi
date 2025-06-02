@@ -37,7 +37,9 @@ model Category {
 model User {
   id         Int     @id @default(autoincrement())
   username   String  @unique
+  /// The user's first name
   firstName  String?
+  /// The user's last name
   lastName   String?
   email      String?
   password   String?
