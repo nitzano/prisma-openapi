@@ -1,0 +1,62 @@
+// Simple Prisma schema for testing with comments
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+generator openapi {
+    provider = "prisma-openapi"
+    output   = "./openapi"
+}
+
+/// A user model that represents a person in our system
+model User {
+    id        Int      @id @default(autoincrement())
+    /// The user's email address
+    email     String   @unique
+    /// The user's full name
+    name      String?
+    /// Posts written by this user
+    posts     Post[]
+    profile   Profile?
+    /// User permission role
+    role      Role     @default(USER)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+/// A blog post
+model Post {
+    id        Int      @id @default(autoincrement())
+    /// Post title
+    title     String
+    /// Post content in markdown format
+    content   String?
+    /// Whether the post is published or draft
+    published Boolean  @default(false)
+    author    User     @relation(fields: [authorId], references: [id])
+    authorId  Int
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+/// User profile with additional information
+model Profile {
+    id     Int    @id @default(autoincrement())
+    /// User biography
+    bio    String
+    user   User   @relation(fields: [userId], references: [id])
+    userId Int    @unique
+}
+
+/// User role for authorization
+enum Role {
+    /// Regular user
+    USER
+    /// Administrator with full access
+    ADMIN
+}

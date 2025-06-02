@@ -124,8 +124,15 @@ function generateModelProperties(
 			}
 		}
 
-		// Add property description
-		properties += ` *         ${field.name}:\n *           type: ${propertyType}\n`;
+		// Add property with type and description if available
+		properties += ` *         ${field.name}:\n *           type: ${propertyType}`;
+		
+		// Add description if available
+		if (field.documentation) {
+			properties += `\n *           description: ${field.documentation}`;
+		}
+		
+		properties += '\n';
 	}
 
 	return properties;
