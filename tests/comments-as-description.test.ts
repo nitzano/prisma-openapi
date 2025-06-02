@@ -1,12 +1,12 @@
-import type { GeneratorOptions } from '@prisma/generator-helper';
-import { getDMMF } from '@prisma/internals';
 import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
-import { OpenAPIObject, SchemaObject } from 'openapi3-ts/oas31';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import {getDMMF} from '@prisma/internals';
+import type {GeneratorOptions} from '@prisma/generator-helper';
+import {type OpenAPIObject, type SchemaObject} from 'openapi3-ts/oas31';
+import {afterEach, beforeEach, describe, expect, it} from 'vitest';
 import yaml from 'yaml';
-import { onGenerate } from '../src/on-generate/on-generate.js';
+import {onGenerate} from '../src/on-generate/on-generate.js';
 
 describe('Comments as field descriptions tests', () => {
 	let outputDirectory: string;
@@ -97,21 +97,29 @@ describe('Comments as field descriptions tests', () => {
 		expect(fs.existsSync(yamlPath)).toBe(true);
 
 		// Verify the content of the YAML file
-		const generatedOpenApi: OpenAPIObject = yaml.parse(fs.readFileSync(yamlPath, 'utf8'));
-		
+		const generatedOpenApi: OpenAPIObject = yaml.parse(
+			fs.readFileSync(yamlPath, 'utf8'),
+		);
+
 		// Check that the schemas were generated
 		expect(generatedOpenApi).toHaveProperty('components');
 		expect(generatedOpenApi.components).toHaveProperty('schemas');
-		
+
 		// Check that the User schema has the field descriptions
-		const userSchema = generatedOpenApi.components!.schemas!.User as SchemaObject;
+		const userSchema = generatedOpenApi.components!.schemas!
+			.User as SchemaObject;
 		expect(userSchema).toHaveProperty('properties');
 		expect(userSchema.properties).toHaveProperty('email');
-		expect((userSchema.properties!.email as SchemaObject).description).toBe("The user's email address");
-		expect((userSchema.properties!.name as SchemaObject).description).toBe("The user's full name");
-		
+		expect((userSchema.properties!.email as SchemaObject).description).toBe(
+			"The user's email address",
+		);
+		expect((userSchema.properties!.name as SchemaObject).description).toBe(
+			"The user's full name",
+		);
+
 		// Check that the Role enum has its values properly described
-		const roleSchema = generatedOpenApi.components!.schemas!.Role as SchemaObject;
+		const roleSchema = generatedOpenApi.components!.schemas!
+			.Role as SchemaObject;
 		expect(roleSchema).toHaveProperty('enum');
 	});
 
@@ -182,7 +190,7 @@ describe('Comments as field descriptions tests', () => {
 
 		// Read the content of the JS file
 		const jsContent = fs.readFileSync(jsPath, 'utf8');
-		
+
 		// Check that the field descriptions are included in the JSDoc
 		expect(jsContent).toContain("description: The user's email address");
 		expect(jsContent).toContain("description: The user's full name");

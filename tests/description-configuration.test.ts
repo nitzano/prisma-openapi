@@ -1,12 +1,12 @@
-import type { GeneratorOptions } from '@prisma/generator-helper';
-import { getDMMF } from '@prisma/internals';
 import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
-import { OpenAPIObject } from 'openapi3-ts';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import {getDMMF} from '@prisma/internals';
+import type {GeneratorOptions} from '@prisma/generator-helper';
+import {type OpenAPIObject} from 'openapi3-ts';
+import {afterEach, beforeEach, describe, expect, it} from 'vitest';
 import yaml from 'yaml';
-import { onGenerate } from '../src/on-generate/on-generate.js';
+import {onGenerate} from '../src/on-generate/on-generate.js';
 
 describe('Description configuration tests', () => {
 	let outputDirectory: string;
@@ -91,7 +91,9 @@ describe('Description configuration tests', () => {
 		expect(fs.existsSync(yamlPath)).toBe(true);
 
 		// Verify the content of the YAML file
-		const generatedOpenApi: OpenAPIObject = yaml.parse(fs.readFileSync(yamlPath, 'utf8'));
+		const generatedOpenApi: OpenAPIObject = yaml.parse(
+			fs.readFileSync(yamlPath, 'utf8'),
+		);
 		expect(generatedOpenApi).toHaveProperty('info');
 		expect(generatedOpenApi.info).toHaveProperty('description', '');
 	});
@@ -164,7 +166,9 @@ describe('Description configuration tests', () => {
 		expect(fs.existsSync(yamlPath)).toBe(true);
 
 		// Verify the content of the YAML file
-		const generatedOpenApi: OpenAPIObject = yaml.parse(fs.readFileSync(yamlPath, 'utf8'));
+		const generatedOpenApi: OpenAPIObject = yaml.parse(
+			fs.readFileSync(yamlPath, 'utf8'),
+		);
 		expect(generatedOpenApi).toHaveProperty('info');
 		expect(generatedOpenApi.info).toHaveProperty(
 			'description',
