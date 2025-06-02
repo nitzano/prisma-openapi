@@ -3,7 +3,7 @@ import * as os from 'node:os';
 import * as path from 'node:path';
 import {getDMMF} from '@prisma/internals';
 import type {GeneratorOptions} from '@prisma/generator-helper';
-import {type OpenAPIObject} from 'openapi3-ts';
+import {type OpenAPIObject, type SchemaObject} from 'openapi3-ts/oas31';
 import {afterEach, beforeEach, describe, expect, it} from 'vitest';
 import yaml from 'yaml';
 import {onGenerate} from '../src/on-generate/on-generate.js';
@@ -91,9 +91,9 @@ describe('Description configuration tests', () => {
 		expect(fs.existsSync(yamlPath)).toBe(true);
 
 		// Verify the content of the YAML file
-		const generatedOpenApi: OpenAPIObject = yaml.parse(
+		const generatedOpenApi = yaml.parse(
 			fs.readFileSync(yamlPath, 'utf8'),
-		);
+		) as OpenAPIObject;
 		expect(generatedOpenApi).toHaveProperty('info');
 		expect(generatedOpenApi.info).toHaveProperty('description', '');
 	});
@@ -166,9 +166,9 @@ describe('Description configuration tests', () => {
 		expect(fs.existsSync(yamlPath)).toBe(true);
 
 		// Verify the content of the YAML file
-		const generatedOpenApi: OpenAPIObject = yaml.parse(
+		const generatedOpenApi = yaml.parse(
 			fs.readFileSync(yamlPath, 'utf8'),
-		);
+		) as OpenAPIObject;
 		expect(generatedOpenApi).toHaveProperty('info');
 		expect(generatedOpenApi.info).toHaveProperty(
 			'description',

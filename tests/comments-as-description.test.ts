@@ -97,9 +97,9 @@ describe('Comments as field descriptions tests', () => {
 		expect(fs.existsSync(yamlPath)).toBe(true);
 
 		// Verify the content of the YAML file
-		const generatedOpenApi: OpenAPIObject = yaml.parse(
+		const generatedOpenApi = yaml.parse(
 			fs.readFileSync(yamlPath, 'utf8'),
-		);
+		) as OpenAPIObject;
 
 		// Check that the schemas were generated
 		expect(generatedOpenApi).toHaveProperty('components');
