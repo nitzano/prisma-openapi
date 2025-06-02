@@ -79,19 +79,31 @@ generator openapi {
   output   = "./openapi"
 }
 
+/// Represents a user in the system
 model User {
+  /// Unique identifier for the user
   id        Int      @id @default(autoincrement())
+  /// User's email address (must be unique)
   email     String   @unique
+  /// User's full name (optional)
   name      String?
+  /// Posts authored by this user
   posts     Post[]
 }
 
+/// Represents a blog post
 model Post {
+  /// Unique identifier for the post
   id        Int      @id @default(autoincrement())
+  /// Title of the blog post
   title     String
+  /// Main content of the post (optional)
   content   String?
+  /// Whether the post is published or draft
   published Boolean  @default(false)
+  /// Author of this post
   author    User     @relation(fields: [authorId], references: [id])
+  /// Foreign key referencing the author
   authorId  Int
 }
 ```
@@ -110,16 +122,21 @@ components:
   schemas:
     User:
       type: object
+      description: Represents a user in the system
       properties:
         id:
           type: integer
           format: int32
+          description: Unique identifier for the user
         email:
           type: string
+          description: User's email address (must be unique)
         name:
           type: string
+          description: User's full name (optional)
         posts:
           type: array
+          description: Posts authored by this user
           items:
             $ref: '#/components/schemas/Post'
       required:
@@ -127,21 +144,28 @@ components:
         - email
     Post:
       type: object
+      description: Represents a blog post
       properties:
         id:
           type: integer
           format: int32
+          description: Unique identifier for the post
         title:
           type: string
+          description: Title of the blog post
         content:
           type: string
+          description: Main content of the post (optional)
         published:
           type: boolean
+          description: Whether the post is published or draft
         author:
           $ref: '#/components/schemas/User'
+          description: Author of this post
         authorId:
           type: integer
           format: int32
+          description: Foreign key referencing the author
       required:
         - id
         - title
@@ -202,6 +226,40 @@ The generated JSDoc comments can be imported into your API documentation workflo
  *         - id
  *         - email
  */
+```
+
+### Prisma Comments as Descriptions
+
+Prisma-openapi automatically converts Prisma schema comments into OpenAPI description fields. Use triple-slash comments (`///`) to add descriptions to your models and fields:
+
+```prisma
+/// User account information
+model User {
+  /// Primary key for the user
+  id    Int    @id @default(autoincrement())
+  /// User's email address for login
+  email String @unique
+  /// Optional display name
+  name  String?
+}
+```
+
+This will generate:
+
+```yaml
+User:
+  type: object
+  description: User account information
+  properties:
+    id:
+      type: integer
+      description: Primary key for the user
+    email:
+      type: string
+      description: User's email address for login
+    name:
+      type: string
+      description: Optional display name
 ```
 
 ## Configuration
