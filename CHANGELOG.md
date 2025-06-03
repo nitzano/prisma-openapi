@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.3.2
+
+### Patch Changes
+
+- 8e28b34: handle multiline prisma comments correctly (closes #51)
+
 ## 1.3.1
 
 ### Patch Changes
