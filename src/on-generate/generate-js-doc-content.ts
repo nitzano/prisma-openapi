@@ -129,7 +129,23 @@ function generateModelProperties(
 
 		// Add description if available
 		if (field.documentation) {
-			properties += `\n *           description: ${field.documentation}`;
+			// Convert literal \n to actual newlines for multiline support
+			// Also trim any leading spaces after newlines
+			const description = field.documentation
+				.replaceAll('\\n', '\n')
+				.replaceAll(/\n\s+/g, '\n');
+
+			// Check if description contains newlines
+			if (description.includes('\n')) {
+				// Use YAML block scalar notation for multiline descriptions
+				const indentedLines = description
+					.split('\n')
+					.map((line) => ` *             ${line}`)
+					.join('\n');
+				properties += `\n *           description: |-\n${indentedLines}`;
+			} else {
+				properties += `\n *           description: ${description}`;
+			}
 		}
 
 		properties += '\n';

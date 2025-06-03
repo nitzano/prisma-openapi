@@ -127,7 +127,11 @@ export function generatePropertiesFromModel(
 
 		// Add description if available
 		if (field.documentation && !('$ref' in property)) {
-			property.description = field.documentation;
+			// Convert literal \n to actual newlines for multiline support
+			// Also trim any leading spaces after newlines
+			property.description = field.documentation
+				.replaceAll('\\n', '\n')
+				.replaceAll(/\n\s+/g, '\n');
 		}
 
 		properties[field.name] = property;

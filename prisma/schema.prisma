@@ -8,7 +8,7 @@ datasource db {
 }
 
 generator openapi {
-  provider = "node ./dist/index.js"
+  provider      = "node ./dist/index.js"
   generateJsDoc = true
 }
 
@@ -37,7 +37,7 @@ model Category {
 model User {
   id         Int     @id @default(autoincrement())
   username   String  @unique
-  /// The user's first name
+  /// The user's\n first name
   firstName  String?
   /// The user's last name
   lastName   String?
