@@ -20,6 +20,7 @@ A Prisma generator that automatically creates OpenAPI specifications from your P
   - [Basic Usage](#basic-usage)
   - [Custom Configuration](#custom-configuration)
   - [JSDoc Integration](#jsdoc-integration)
+  - [Prisma Comments as Descriptions](#prisma-comments-as-descriptions)
 - [Configuration](#configuration)
 - [License](#license)
 
