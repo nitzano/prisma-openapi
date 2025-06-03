@@ -41,6 +41,8 @@ model User {
   firstName  String?
   /// The user's last name
   lastName   String?
+  /// The user email address
+  /// This is optional and can be null.
   email      String?
   password   String?
   phone      String?
