@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.3.4
+
+### Patch Changes
+
+- c87dfa4: Add support for model descriptions in OpenAPI schema generation
+
 ## 1.3.3
 
 ### Patch Changes
