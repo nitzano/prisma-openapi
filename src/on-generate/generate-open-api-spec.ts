@@ -22,6 +22,7 @@ export function generateOpenApiSpec(
 	for (const model of filteredModels) {
 		const modelSchema: SchemaObject = {
 			type: 'object',
+			description: model.documentation,
 			properties: generatePropertiesFromModel(model, filteredModels, enums),
 			required: model.fields
 				.filter((field) => field.isRequired)
