@@ -1,4 +1,4 @@
-// Test manual schema for includeModels functionality
+// Simple Prisma schema for testing
 datasource db {
     provider = "postgresql"
     url      = env("DATABASE_URL")
@@ -10,8 +10,7 @@ generator client {
 
 generator openapi {
     provider = "prisma-openapi"
-    output   = "./test-manual-output"
-    includeModels = "User,Post"
+    output   = "./openapi"
 }
 
 model User {
@@ -41,12 +40,6 @@ model Profile {
     bio    String
     user   User   @relation(fields: [userId], references: [id])
     userId Int    @unique
-}
-
-model Comment {
-    id      Int    @id @default(autoincrement())
-    content String
-    postId  Int
 }
 
 enum Role {
