@@ -1,96 +1,55 @@
-generator client {
-  provider = "prisma-client-js"
+// Test manual schema for includeModels functionality
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+generator client {
+    provider = "prisma-client-js"
 }
 
 generator openapi {
-  provider      = "node ./dist/index.js"
-  generateJsDoc = true
-}
-
-model Order {
-  id       Int          @id @default(autoincrement())
-  petId    Int
-  quantity Int
-  shipDate DateTime?
-  status   OrderStatus?
-  complete Boolean?
-  pet      Pet          @relation(fields: [petId], references: [id])
-}
-
-enum OrderStatus {
-  placed
-  approved
-  delivered
-}
-
-model Category {
-  id   Int     @id @default(autoincrement())
-  name String?
-  pets Pet[]
+    provider = "prisma-openapi"
+    output   = "./test-manual-output"
+    includeModels = "User,Post"
 }
 
 model User {
-  id         Int     @id @default(autoincrement())
-  username   String  @unique
-  /// The user's\n first name
-  firstName  String?
-  /// The user's last name
-  lastName   String?
-  /// The user email address
-  /// This is optional and can be null.
-  email      String?
-  password   String?
-  phone      String?
-  userStatus Int?
+    id        Int      @id @default(autoincrement())
+    email     String   @unique
+    name      String?
+    posts     Post[]
+    profile   Profile?
+    role      Role     @default(USER)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
-model Tag {
-  id   Int      @id @default(autoincrement())
-  name String?
-  pets PetTag[]
+model Post {
+    id        Int      @id @default(autoincrement())
+    title     String
+    content   String?
+    published Boolean  @default(false)
+    author    User     @relation(fields: [authorId], references: [id])
+    authorId  Int
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
-model Pet {
-  id         Int        @id @default(autoincrement())
-  name       String
-  categoryId Int?
-  status     PetStatus?
-  orders     Order[]
-  tags       PetTag[]
-  category   Category?  @relation(fields: [categoryId], references: [id])
-  photoUrls  PhotoUrl[]
+model Profile {
+    id     Int    @id @default(autoincrement())
+    bio    String
+    user   User   @relation(fields: [userId], references: [id])
+    userId Int    @unique
 }
 
-model PetTag {
-  pet   Pet @relation(fields: [petId], references: [id])
-  petId Int
-  tag   Tag @relation(fields: [tagId], references: [id])
-  tagId Int
-
-  @@id([petId, tagId])
+model Comment {
+    id      Int    @id @default(autoincrement())
+    content String
+    postId  Int
 }
 
-model PhotoUrl {
-  id    Int    @id @default(autoincrement())
-  url   String
-  pet   Pet    @relation(fields: [petId], references: [id])
-  petId Int
-}
-
-enum PetStatus {
-  available
-  pending
-  sold
-}
-
-model ApiResponse {
-  id      Int     @id @default(autoincrement())
-  code    Int?
-  type    String?
-  message String?
+enum Role {
+    USER
+    ADMIN
 }
