@@ -73,7 +73,15 @@ export function generatePropertiesFromModel(
 					}
 				}
 
-				property = scalarProperty;
+				if (field.isList) {
+					property = {
+						type: 'array',
+						items: scalarProperty,
+					};
+				} else {
+					property = scalarProperty;
+				}
+
 				break;
 			}
 
