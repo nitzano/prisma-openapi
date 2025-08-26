@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.3.6
+
+### Patch Changes
+
+- 4d8c1f8: add support for array of scalars
+
 ## 1.3.5
 
 ### Patch Changes
