@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.4.1
+
+### Patch Changes
+
+- a274db2: remove the need for tokens
+
 ## 1.4.0
 
 ### Minor Changes
