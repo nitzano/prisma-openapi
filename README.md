@@ -26,6 +26,7 @@ A Prisma generator that automatically creates OpenAPI specifications from your P
 
 
 ## Features
+
 - 🔄 **Automatic Generation**: Convert Prisma models to OpenAPI schemas with a single command
 - 🔍 **Type Safety**: Maintain type consistency between your database and API documentation
 - 🛠️ **Customizable**: Configure which models to include and set API metadata
