@@ -6,6 +6,7 @@
 [![npm](https://img.shields.io/npm/v/prisma-openapi)](https://www.npmjs.com/package/prisma-openapi)
 [![GitHub Repo stars](https://img.shields.io/github/stars/nitzano/prisma-openapi?style=flat)](https://github.com/nitzano/prisma-openapi/stargazers)
 ![npm](https://img.shields.io/npm/dw/prisma-openapi)
+![npm](https://img.shields.io/npm/dt/prisma-openapi)
 ![GitHub License](https://img.shields.io/github/license/nitzano/prisma-openapi)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
 
