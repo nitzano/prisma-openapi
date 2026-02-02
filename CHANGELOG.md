@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.4.0
+
+### Minor Changes
+
+- ab60480: Support Prisma 7+
+
 ## 1.3.6
 
 ### Patch Changes
