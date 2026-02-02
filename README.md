@@ -68,7 +68,6 @@ This will create OpenAPI documentation in the specified output directory.
 // schema.prisma
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 generator client {

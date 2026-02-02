@@ -18,7 +18,7 @@ export async function onGenerate(options: GeneratorOptions) {
 	logger.info('Starting OpenAPI generation...');
 	try {
 		// Log all models in the Prisma schema
-		const dmmf = options.dmmf;
+		const {dmmf} = options;
 		logger.debug(
 			`Found ${dmmf.datamodel.models.length} models in Prisma schema`,
 		);

@@ -1,23 +1,12 @@
 /** @type {import('xo').Options} */
 const xoConfig = {
-	// Enable Prettier integration
 	prettier: true,
-	// Set Node.js environment
-	envs: ['node'],
-	// Apply XO to TypeScript files
-	extensions: ['ts'],
-	// Ignore the compiled output
-	ignores: ['dist'],
-	// Configure TypeScript parser
-	parser: '@typescript-eslint/parser',
-	parserOptions: {
-		ecmaVersion: 'latest',
-		sourceType: 'module',
-	},
-	plugins: ['@typescript-eslint'],
-	// Disable specific rules
+	ignores: ['dist', 'xo.config.js'],
 	rules: {
 		'@typescript-eslint/consistent-type-assertions': 'warn',
+		'@typescript-eslint/no-unsafe-assignment': 'off',
+		'@typescript-eslint/no-unsafe-call': 'off',
+		'@typescript-eslint/no-unsafe-member-access': 'off',
 	},
 };
 

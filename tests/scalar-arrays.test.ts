@@ -31,7 +31,6 @@ describe('Scalar arrays support', () => {
 		const schema = `
 			datasource db {
 				provider = "postgresql"
-				url      = env("DATABASE_URL")
 			}
 			
 			generator client {
@@ -129,7 +128,6 @@ describe('Scalar arrays support', () => {
 		const schema = `
 			datasource db {
 				provider = "postgresql"
-				url      = env("DATABASE_URL")
 			}
 			
 			generator client {

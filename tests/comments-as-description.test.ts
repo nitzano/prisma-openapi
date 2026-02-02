@@ -31,7 +31,6 @@ describe('Comments as field descriptions tests', () => {
 		const schema = `
 			datasource db {
 				provider = "postgresql"
-				url      = env("DATABASE_URL")
 			}
 			
 			generator client {
@@ -128,7 +127,6 @@ describe('Comments as field descriptions tests', () => {
 		const schema = `
 			datasource db {
 				provider = "postgresql"
-				url      = env("DATABASE_URL")
 			}
 			
 			generator client {

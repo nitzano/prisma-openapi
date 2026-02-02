@@ -3,7 +3,7 @@ import * as os from 'node:os';
 import * as path from 'node:path';
 import {getDMMF} from '@prisma/internals';
 import type {GeneratorOptions} from '@prisma/generator-helper';
-import {type OpenAPIObject, type SchemaObject} from 'openapi3-ts/oas31';
+import {type OpenAPIObject} from 'openapi3-ts/oas31';
 import {afterEach, beforeEach, describe, expect, it} from 'vitest';
 import yaml from 'yaml';
 import {onGenerate} from '../src/on-generate/on-generate.js';
@@ -31,7 +31,6 @@ describe('Description configuration tests', () => {
 		const schema = `
 			datasource db {
 				provider = "postgresql"
-				url      = env("DATABASE_URL")
 			}
 			
 			generator client {
@@ -103,7 +102,6 @@ describe('Description configuration tests', () => {
 		const schema = `
 			datasource db {
 				provider = "postgresql"
-				url      = env("DATABASE_URL")
 			}
 			
 			generator client {

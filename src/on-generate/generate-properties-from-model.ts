@@ -124,12 +124,13 @@ export function generatePropertiesFromModel(
 				break;
 			}
 
-			default: {
-				const defaultProperty: SchemaObject = {
+			case 'unsupported': {
+				const unsupportedProperty: SchemaObject = {
 					type: 'string',
-					description: 'Unknown field kind',
+					description: 'Unsupported field kind',
 				};
-				property = defaultProperty;
+				property = unsupportedProperty;
+				break;
 			}
 		}
 
@@ -138,7 +139,7 @@ export function generatePropertiesFromModel(
 			// Convert literal \n to actual newlines for multiline support
 			// Also trim any leading spaces after newlines
 			property.description = field.documentation
-				.replaceAll('\\n', '\n')
+				.replaceAll(String.raw`\n`, '\n')
 				.replaceAll(/\n\s+/g, '\n');
 		}
 
