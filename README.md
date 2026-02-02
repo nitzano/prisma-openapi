@@ -72,10 +72,6 @@ datasource db {
   provider = "postgresql"
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 generator openapi {
   provider = "prisma-openapi"
   output   = "./openapi"
