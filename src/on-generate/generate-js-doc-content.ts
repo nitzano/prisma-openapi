@@ -87,6 +87,11 @@ function generateModelProperties(
 						break;
 					}
 
+					case 'unsupported': {
+						propertyType = 'string';
+						break;
+					}
+
 					default: {
 						propertyType = 'string';
 					}
@@ -119,8 +124,9 @@ function generateModelProperties(
 				break;
 			}
 
-			default: {
+			case 'unsupported': {
 				propertyType = 'string';
+				break;
 			}
 		}
 
@@ -132,7 +138,7 @@ function generateModelProperties(
 			// Convert literal \n to actual newlines for multiline support
 			// Also trim any leading spaces after newlines
 			const description = field.documentation
-				.replaceAll('\\n', '\n')
+				.replaceAll(String.raw`\n`, '\n')
 				.replaceAll(/\n\s+/g, '\n');
 
 			// Check if description contains newlines

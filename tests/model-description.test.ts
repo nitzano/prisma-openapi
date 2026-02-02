@@ -31,7 +31,6 @@ describe('Model description tests', () => {
 		const schema = `
 			datasource db {
 				provider = "postgresql"
-				url      = env("DATABASE_URL")
 			}
 			
 			generator client {
@@ -136,7 +135,6 @@ describe('Model description tests', () => {
 		const schema = `
 			datasource db {
 				provider = "postgresql"
-				url      = env("DATABASE_URL")
 			}
 			
 			generator client {
