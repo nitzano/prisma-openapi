@@ -9,6 +9,7 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 # maybe removed in the future
 permissions:
+  id-token: write # Required for OIDC
   packages: write
   contents: write
   pull-requests: write
@@ -21,7 +22,7 @@ jobs:
       - uses: pnpm/action-setup@v3
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
           cache: "pnpm"
       - run: pnpm install
       - run: pnpm build
