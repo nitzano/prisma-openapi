@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.4.3
+
+### Patch Changes
+
+- 6c124ed: remove prisma client from docs
+
 ## 1.4.2
 
 ### Patch Changes
