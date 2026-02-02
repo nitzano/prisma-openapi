@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.4.2
+
+### Patch Changes
+
+- a691625: show total downloads in docks
+
 ## 1.4.1
 
 ### Patch Changes
