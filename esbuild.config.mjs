@@ -7,4 +7,6 @@ await build({
 	platform: 'node',
 	target: 'node22',
 	outfile: 'dist/lib/index.js',
+	external: ['@prisma/*'],
+	packages: 'external',
 });
