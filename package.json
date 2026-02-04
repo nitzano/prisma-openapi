@@ -9,7 +9,16 @@
     "prisma-openapi": "./dist/index.js"
   },
   "type": "module",
-  "exports": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./lib": {
+      "types": "./dist/lib/index.d.ts",
+      "default": "./dist/lib/index.js"
+    }
+  },
   "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "rimraf dist prisma/openapi",
