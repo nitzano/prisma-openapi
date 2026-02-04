@@ -23,6 +23,7 @@
   "scripts": {
     "clean": "rimraf dist prisma/openapi",
     "build": "tsc",
+    "build:prisma": "tsc",
     "build:lib": "echo building with esbuild",
     "dev:gen": "pnpm clean && pnpm build && pnpm generate",
     "generate": "prisma generate",
