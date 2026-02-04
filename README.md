@@ -19,7 +19,6 @@ A Prisma generator that automatically creates OpenAPI specifications from your P
 - [Usage](#usage)
 - [Examples](#examples)
   - [Basic Usage](#basic-usage)
-  - [Custom Configuration](#custom-configuration)
   - [JSDoc Integration](#jsdoc-integration)
   - [Prisma Comments as Descriptions](#prisma-comments-as-descriptions)
 - [Configuration](#configuration)
@@ -34,6 +33,7 @@ A Prisma generator that automatically creates OpenAPI specifications from your P
 - 🧩 **Relationship Support**: Properly maps Prisma relationships to OpenAPI references
 - *️⃣ **Enum Support**: Full support for Prisma enums in your API documentation
 - 📝 **JSDoc Generation**: Create JSDoc comments for your TypeScript types based on the Prisma schema
+- 🧰 **Programmatic Schema Generation**: Generate schema directly from code
 
 ## Setup
 
@@ -150,6 +150,36 @@ components:
         - published
         - author
         - authorId
+
+### Programmatic Schema Generation
+
+Generate a schema programmatically from a Prisma schema string:
+
+```ts
+import { generateOpenApiSchema } from "prisma-openapi";
+
+const schema = `
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id    Int    @id @default(autoincrement())
+  email String @unique
+  name  String?
+}
+`;
+
+const { yaml, json } = await generateOpenApiSchema({
+  prismaSchema: schema,
+  title: "My API",
+  description: "Generated via SDK",
+  generateYaml: true,
+  generateJson: true,
+});
+
+console.log(yaml);
+```
 ```
 
 ### Custom Configuration
