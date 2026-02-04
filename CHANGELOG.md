@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.5.1
+
+### Patch Changes
+
+- 60dfdc2: build with esbuild
+
 ## 1.5.0
 
 ### Minor Changes
