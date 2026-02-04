@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.5.2
+
+### Patch Changes
+
+- a5f1b6e: fix external
+
 ## 1.5.1
 
 ### Patch Changes
