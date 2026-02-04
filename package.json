@@ -23,6 +23,7 @@
   "scripts": {
     "clean": "rimraf dist prisma/openapi",
     "build": "tsc",
+    "build:lib": "echo building with esbuild",
     "dev:gen": "pnpm clean && pnpm build && pnpm generate",
     "generate": "prisma generate",
     "dev": "tsc --watch",
@@ -59,6 +60,7 @@
     "@typescript-eslint/eslint-plugin": "^8.54.0",
     "@typescript-eslint/parser": "^8.54.0",
     "@vitest/coverage-v8": "^4.0.18",
+    "esbuild": "^0.27.2",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "prisma": "^7.3.0",
