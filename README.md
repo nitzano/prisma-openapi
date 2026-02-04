@@ -33,7 +33,7 @@ A Prisma generator that automatically creates OpenAPI specifications from your P
 - 🧩 **Relationship Support**: Properly maps Prisma relationships to OpenAPI references
 - *️⃣ **Enum Support**: Full support for Prisma enums in your API documentation
 - 📝 **JSDoc Generation**: Create JSDoc comments for your TypeScript types based on the Prisma schema
-- 🧰 **SDK Schema Generation**: Generate schema programmatically via the SDK
+- 🧰 **Programmatic Schema Generation**: Generate schema directly from code
 
 ## Setup
 
@@ -151,9 +151,9 @@ components:
         - author
         - authorId
 
-### SDK Schema Generation
+### Programmatic Schema Generation
 
-Use the SDK to generate a schema programmatically from a Prisma schema string:
+Generate a schema programmatically from a Prisma schema string:
 
 ```ts
 import { generateOpenApiSchema } from "prisma-openapi";
