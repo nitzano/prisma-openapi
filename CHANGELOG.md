@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.5.0
+
+### Minor Changes
+
+- 1e6f015: Allow to generate schemas with sdk
+
 ## 1.4.3
 
 ### Patch Changes
