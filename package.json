@@ -22,9 +22,9 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "rimraf dist prisma/openapi",
-    "build": "tsc",
+    "build": "pnpm build:prisma && pnpm build:lib",
     "build:prisma": "tsc",
-    "build:lib": "echo building with esbuild",
+    "build:lib": "node esbuild.config.mjs",
     "dev:gen": "pnpm clean && pnpm build && pnpm generate",
     "generate": "prisma generate",
     "dev": "tsc --watch",
