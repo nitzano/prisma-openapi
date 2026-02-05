@@ -19,6 +19,8 @@ A Prisma generator that automatically creates OpenAPI specifications from your P
 - [Usage](#usage)
 - [Examples](#examples)
   - [Basic Usage](#basic-usage)
+  - [Programmatic Schema Generation](#programmatic-schema-generation)
+  - [Custom Configuration](#custom-configuration)
   - [JSDoc Integration](#jsdoc-integration)
   - [Prisma Comments as Descriptions](#prisma-comments-as-descriptions)
 - [Configuration](#configuration)
@@ -150,13 +152,14 @@ components:
         - published
         - author
         - authorId
+```
 
 ### Programmatic Schema Generation
 
 Generate a schema programmatically from a Prisma schema string:
 
 ```ts
-import { generateOpenApiSchema } from "prisma-openapi";
+import { generateOpenApiSchema } from "prisma-openapi/lib";
 
 const schema = `
 datasource db {
@@ -180,7 +183,7 @@ const { yaml, json } = await generateOpenApiSchema({
 
 console.log(yaml);
 ```
-```
+
 
 ### Custom Configuration
 
