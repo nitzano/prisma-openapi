@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.5.5
+
+### Patch Changes
+
+- a2fc69e: export cjs endpoints
+
 ## 1.5.4
 
 ### Patch Changes
