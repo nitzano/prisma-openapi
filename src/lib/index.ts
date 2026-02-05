@@ -1,4 +1,3 @@
-import {getDMMF} from '@prisma/internals';
 import {generateOpenApiSpec} from '../on-generate/generate-open-api-spec.js';
 import {
 	defaultOptions,
@@ -16,6 +15,8 @@ export async function generateOpenApiSchema(
 		throw new Error('Prisma schema must be a non-empty string.');
 	}
 
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	const {getDMMF} = await import('@prisma/internals');
 	const dmmf = await getDMMF({datamodel: prismaSchema});
 	const prismaOpenApiOptions: PrismaOpenApiOptions = {
 		...defaultOptions,
