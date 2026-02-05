@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.5.3
+
+### Patch Changes
+
+- 736d68d: fix docs
+
 ## 1.5.2
 
 ### Patch Changes
