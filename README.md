@@ -173,15 +173,21 @@ model User {
 }
 `;
 
-const { yaml, json } = await generateOpenApiSchema({
-  prismaSchema: schema,
+// Returns YAML by default
+const yamlOutput = await generateOpenApiSchema(schema, {
   title: "My API",
   description: "Generated via SDK",
-  generateYaml: true,
+});
+
+// Or generate JSON output
+const jsonOutput = await generateOpenApiSchema(schema, {
+  title: "My API",
+  description: "Generated via SDK",
+  generateYaml: false,
   generateJson: true,
 });
 
-console.log(yaml);
+console.log(yamlOutput);
 ```
 
 
