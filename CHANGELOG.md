@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.5.6
+
+### Patch Changes
+
+- 4670554: add demo to readme
+
 ## 1.5.5
 
 ### Patch Changes
