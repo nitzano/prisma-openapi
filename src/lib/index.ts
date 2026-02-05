@@ -7,7 +7,7 @@ import {
 
 export type PrismaOpenApiSchemaOptions = Partial<PrismaOpenApiOptions>;
 
-export async function generateOpenApiSchema(
+async function generateOpenApiSchema(
 	prismaSchema: string,
 	options: PrismaOpenApiSchemaOptions = {},
 ): Promise<string> {
@@ -15,8 +15,12 @@ export async function generateOpenApiSchema(
 		throw new Error('Prisma schema must be a non-empty string.');
 	}
 
+	// Handle CJS/ESM interop - @prisma/internals is CJS, exports may be on .default
+
+	const prismaInternals: any = await import('@prisma/internals');
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	const {getDMMF} = await import('@prisma/internals');
+	const getDMMF = prismaInternals.default?.getDMMF ?? prismaInternals.getDMMF;
+
 	const dmmf = await getDMMF({datamodel: prismaSchema});
 	const prismaOpenApiOptions: PrismaOpenApiOptions = {
 		...defaultOptions,
@@ -32,19 +36,20 @@ export async function generateOpenApiSchema(
 	);
 
 	if (includeModelsList && includeModelsList.length > 0) {
-		filteredModels = filteredModels.filter((model) =>
-			includeModelsList.includes(model.name),
+		filteredModels = filteredModels.filter((model: any) =>
+			includeModelsList.includes(model.name as string),
 		);
 	}
 
 	if (excludeModelsList && excludeModelsList.length > 0) {
 		filteredModels = filteredModels.filter(
-			(model) => !excludeModelsList.includes(model.name),
+			(model: any) => !excludeModelsList.includes(model.name as string),
 		);
 	}
 
 	const openApiBuilder = generateOpenApiSpec(
 		filteredModels,
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 		dmmf.datamodel.enums,
 		prismaOpenApiOptions,
 	);
@@ -59,3 +64,10 @@ export async function generateOpenApiSchema(
 
 	return openApiBuilder.getSpecAsJson();
 }
+
+// Named export for ESM consumers
+export {generateOpenApiSchema};
+
+// Default export for CJS interop - handles cases where imports resolve to .default
+const libExports = {generateOpenApiSchema};
+export default libExports;
