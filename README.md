@@ -10,6 +10,8 @@
 ![GitHub License](https://img.shields.io/github/license/nitzano/prisma-openapi)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
 
+### [Demo 🚀](https://prisma-openapi.nitzano.com/)
+
 </div>
 
 A Prisma generator that automatically creates OpenAPI specifications from your Prisma schema. Seamlessly integrate your database models with API documentation without writing any additional code.
