@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.5.4
+
+### Patch Changes
+
+- 33a1743: fix esm cjs iterop
+
 ## 1.5.3
 
 ### Patch Changes
