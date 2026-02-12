@@ -1,7 +1,7 @@
 /** @type {import('xo').Options} */
 const xoConfig = {
 	prettier: true,
-	ignores: ['dist', 'xo.config.js'],
+	ignores: ['dist', 'xo.config.js', 'esbuild.config.mjs'],
 	rules: {
 		'@typescript-eslint/consistent-type-assertions': 'warn',
 		'@typescript-eslint/no-unsafe-assignment': 'off',

@@ -33,6 +33,12 @@ export type PrismaOpenApiOptions = {
 	excludeModels?: string;
 
 	/**
+	 * Comma-separated list of fields to exclude (format: "ModelName.fieldName")
+	 * @default undefined (none)
+	 */
+	excludeFields?: string;
+
+	/**
 	 * Generate YAML format
 	 * @default true
 	 */

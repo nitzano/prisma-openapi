@@ -1,5 +1,50 @@
 import type {GeneratorOptions} from '@prisma/generator-helper';
 import {type ReferenceObject, type SchemaObject} from 'openapi3-ts/oas31';
+import {isFieldIgnored} from './is-field-ignored.js';
+
+/**
+ * Map a Prisma scalar type to an OpenAPI schema object
+ */
+function mapScalarType(type: string): SchemaObject {
+	switch (type) {
+		case 'String': {
+			return {type: 'string'};
+		}
+
+		case 'Int': {
+			return {type: 'integer', format: 'int32'};
+		}
+
+		case 'BigInt': {
+			return {type: 'integer', format: 'int64'};
+		}
+
+		case 'Float':
+		case 'Decimal': {
+			return {type: 'number', format: 'double'};
+		}
+
+		case 'Boolean': {
+			return {type: 'boolean'};
+		}
+
+		case 'DateTime': {
+			return {type: 'string', format: 'date-time'};
+		}
+
+		case 'Json': {
+			return {type: 'object'};
+		}
+
+		case 'unsupported': {
+			return {type: 'string', description: 'Unsupported type'};
+		}
+
+		default: {
+			return {type: 'string', description: 'Unknown type'};
+		}
+	}
+}
 
 /**
  * Generate OpenAPI properties from a Prisma model
@@ -8,70 +53,21 @@ export function generatePropertiesFromModel(
 	model: GeneratorOptions['dmmf']['datamodel']['models'][0],
 	allModels: GeneratorOptions['dmmf']['datamodel']['models'],
 	enums: GeneratorOptions['dmmf']['datamodel']['enums'],
+	excludeFields?: string[],
 ): Record<string, SchemaObject | ReferenceObject> {
 	const properties: Record<string, SchemaObject | ReferenceObject> = {};
 
 	for (const field of model.fields) {
+		if (isFieldIgnored(model.name, field, excludeFields)) {
+			continue;
+		}
+
 		let property: SchemaObject | ReferenceObject;
 
 		// Handle different field types
 		switch (field.kind) {
 			case 'scalar': {
-				// Map Prisma scalar types to OpenAPI types
-				const scalarProperty: SchemaObject = {};
-				switch (field.type) {
-					case 'String': {
-						scalarProperty.type = 'string';
-						break;
-					}
-
-					case 'Int': {
-						scalarProperty.type = 'integer';
-						scalarProperty.format = 'int32';
-						break;
-					}
-
-					case 'BigInt': {
-						scalarProperty.type = 'integer';
-						scalarProperty.format = 'int64';
-						break;
-					}
-
-					case 'Float':
-					case 'Decimal': {
-						scalarProperty.type = 'number';
-						scalarProperty.format = 'double';
-						break;
-					}
-
-					case 'Boolean': {
-						scalarProperty.type = 'boolean';
-						break;
-					}
-
-					case 'DateTime': {
-						scalarProperty.type = 'string';
-						scalarProperty.format = 'date-time';
-						break;
-					}
-
-					case 'Json': {
-						scalarProperty.type = 'object';
-						break;
-					}
-
-					case 'unsupported': {
-						scalarProperty.type = 'string';
-						scalarProperty.description = 'Unsupported type';
-						break;
-					}
-
-					default: {
-						scalarProperty.type = 'string';
-						scalarProperty.description = 'Unknown type';
-						break;
-					}
-				}
+				const scalarProperty = mapScalarType(field.type);
 
 				if (field.isList) {
 					property = {
