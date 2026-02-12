@@ -1,5 +1,6 @@
 import type {GeneratorOptions} from '@prisma/generator-helper';
 import {type ReferenceObject, type SchemaObject} from 'openapi3-ts/oas31';
+import {cleanDocumentation, isFieldIgnored} from './is-field-ignored.js';
 
 /**
  * Generate OpenAPI properties from a Prisma model
@@ -8,10 +9,15 @@ export function generatePropertiesFromModel(
 	model: GeneratorOptions['dmmf']['datamodel']['models'][0],
 	allModels: GeneratorOptions['dmmf']['datamodel']['models'],
 	enums: GeneratorOptions['dmmf']['datamodel']['enums'],
+	excludeFields?: string[],
 ): Record<string, SchemaObject | ReferenceObject> {
 	const properties: Record<string, SchemaObject | ReferenceObject> = {};
 
 	for (const field of model.fields) {
+		if (isFieldIgnored(model.name, field, excludeFields)) {
+			continue;
+		}
+
 		let property: SchemaObject | ReferenceObject;
 
 		// Handle different field types

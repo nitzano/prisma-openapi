@@ -25,6 +25,7 @@ A Prisma generator that automatically creates OpenAPI specifications from your P
   - [Custom Configuration](#custom-configuration)
   - [JSDoc Integration](#jsdoc-integration)
   - [Prisma Comments as Descriptions](#prisma-comments-as-descriptions)
+  - [Field Exclusion](#field-exclusion)
 - [Configuration](#configuration)
 - [License](#license)
 
@@ -281,6 +282,38 @@ User:
       description: Optional display name
 ```
 
+### Field Exclusion
+
+You can exclude specific fields from the generated OpenAPI schema using two approaches:
+
+**1. Using `@openapi.ignore` in field comments:**
+
+Add `@openapi.ignore` to a field's triple-slash comment to exclude it from the generated schema:
+
+```prisma
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  name     String?
+  /// @openapi.ignore
+  password String
+}
+```
+
+**2. Using `excludeFields` in generator config:**
+
+Specify fields to exclude using `ModelName.fieldName` format:
+
+```prisma
+generator openapi {
+  provider      = "prisma-openapi"
+  output        = "./openapi"
+  excludeFields = "User.password, User.secretKey"
+}
+```
+
+Both approaches can be used together. A field is excluded if it matches **either** condition. Excluded fields are removed from both `properties` and `required` in the generated schema.
+
 ## Configuration
 
 | Option | Description | Default |
@@ -290,6 +323,7 @@ User:
 | `description` | API description in OpenAPI spec | Empty string |
 | `includeModels` | Comma-separated list of models to include | All models |
 | `excludeModels` | Comma-separated list of models to exclude | None |
+| `excludeFields` | Comma-separated list of fields to exclude (`ModelName.fieldName`) | None |
 | `generateYaml` | Generate YAML format | `true` |
 | `generateJson` | Generate JSON format | `false` |
 | `generateJsDoc` | Include JSDoc comments in the schema | `false` |

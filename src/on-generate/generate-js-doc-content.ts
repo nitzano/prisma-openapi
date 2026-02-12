@@ -1,4 +1,5 @@
 import type {GeneratorOptions} from '@prisma/generator-helper';
+import {isFieldIgnored} from './is-field-ignored.js';
 
 /**
  * Generate JSDoc OpenAPI comments for Prisma models
@@ -7,6 +8,7 @@ export function generateJsDocumentContent(
 	models: GeneratorOptions['dmmf']['datamodel']['models'],
 	filteredModels: GeneratorOptions['dmmf']['datamodel']['models'],
 	enums: GeneratorOptions['dmmf']['datamodel']['enums'],
+	excludeFields?: string[],
 ): string {
 	// Create JSDoc OpenAPI content with a single block
 	let jsDocumentContent = `/**
@@ -20,9 +22,9 @@ export function generateJsDocumentContent(
  *     ${model.name}:
  *       type: object
  *       properties:
-${generateModelProperties(model).trimEnd()}
+${generateModelProperties(model, excludeFields).trimEnd()}
  *       required:
-${generateRequiredProperties(model)}`;
+${generateRequiredProperties(model, excludeFields)}`;
 	}
 
 	// Add enum schemas
@@ -46,10 +48,15 @@ ${generateEnumValues(enumType)}`;
  */
 function generateModelProperties(
 	model: GeneratorOptions['dmmf']['datamodel']['models'][0],
+	excludeFields?: string[],
 ): string {
 	let properties = '';
 
 	for (const field of model.fields) {
+		if (isFieldIgnored(model.name, field, excludeFields)) {
+			continue;
+		}
+
 		let propertyType = '';
 
 		// Handle different field types
@@ -165,9 +172,13 @@ function generateModelProperties(
  */
 function generateRequiredProperties(
 	model: GeneratorOptions['dmmf']['datamodel']['models'][0],
+	excludeFields?: string[],
 ): string {
 	const requiredFields = model.fields
-		.filter((field) => field.isRequired)
+		.filter(
+			(field) =>
+				field.isRequired && !isFieldIgnored(model.name, field, excludeFields),
+		)
 		.map((field) => field.name);
 
 	return requiredFields.map((field) => ` *         - ${field}`).join('\n');

@@ -1,7 +1,11 @@
 import type {GeneratorOptions} from '@prisma/generator-helper';
 import {OpenApiBuilder, type SchemaObject} from 'openapi3-ts/oas31';
 import {generatePropertiesFromModel} from './generate-properties-from-model.js';
-import {type PrismaOpenApiOptions} from './generator-options.js';
+import {
+	type PrismaOpenApiOptions,
+	parseCommaSeparatedList,
+} from './generator-options.js';
+import {isFieldIgnored} from './is-field-ignored.js';
 
 /**
  * Generate an OpenAPI specification object from Prisma models
@@ -18,14 +22,25 @@ export function generateOpenApiSpec(
 		version: '1.0.0',
 	});
 
+	const excludeFieldsList = parseCommaSeparatedList(options.excludeFields);
+
 	// Create schemas for all filtered models
 	for (const model of filteredModels) {
 		const modelSchema: SchemaObject = {
 			type: 'object',
 			description: model.documentation,
-			properties: generatePropertiesFromModel(model, filteredModels, enums),
+			properties: generatePropertiesFromModel(
+				model,
+				filteredModels,
+				enums,
+				excludeFieldsList,
+			),
 			required: model.fields
-				.filter((field) => field.isRequired)
+				.filter(
+					(field) =>
+						field.isRequired &&
+						!isFieldIgnored(model.name, field, excludeFieldsList),
+				)
 				.map((field) => field.name),
 		};
 		builder.addSchema(model.name, modelSchema);

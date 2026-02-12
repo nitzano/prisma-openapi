@@ -92,10 +92,14 @@ export async function onGenerate(options: GeneratorOptions) {
 		// Write JSDoc file if enabled
 		if (prismaOpenApiOptions.generateJsDoc) {
 			const jsDocumentPath = path.join(outputDirectory, 'openapi.js');
+			const excludeFieldsList = parseCommaSeparatedList(
+				prismaOpenApiOptions.excludeFields,
+			);
 			const jsDocumentContent = generateJsDocumentContent(
 				dmmf.datamodel.models,
 				filteredModels,
 				dmmf.datamodel.enums,
+				excludeFieldsList,
 			);
 			fs.writeFileSync(jsDocumentPath, jsDocumentContent);
 			logger.info(`OpenAPI JSDoc specification written to ${jsDocumentPath}`);
