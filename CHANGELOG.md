@@ -1,5 +1,11 @@
 # prisma-openapi
 
+## 1.6.0
+
+### Minor Changes
+
+- 65eab67: Allow to exclude fields from prisma models
+
 ## 1.5.6
 
 ### Patch Changes
