@@ -54,33 +54,33 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@changesets/cli": "^2.29.8",
-    "@prisma/client": "^7.3.0",
+    "@changesets/cli": "^2.31.1",
+    "@prisma/client": "^7.9.1",
     "@tsconfig/node22": "^22.0.5",
-    "@types/node": "^25.2.0",
-    "@typescript-eslint/eslint-plugin": "^8.54.0",
-    "@typescript-eslint/parser": "^8.54.0",
-    "@vitest/coverage-v8": "^4.0.18",
-    "esbuild": "^0.27.2",
+    "@types/node": "^26.1.2",
+    "@typescript-eslint/eslint-plugin": "^8.65.0",
+    "@typescript-eslint/parser": "^8.65.0",
+    "@vitest/coverage-v8": "^4.1.10",
+    "esbuild": "^0.28.1",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.7",
-    "prisma": "^7.3.0",
+    "lint-staged": "^17.3.0",
+    "prisma": "^7.9.1",
     "psst-ai": "^1.4.0",
-    "rimraf": "^6.1.2",
-    "tsx": "^4.21.0",
+    "rimraf": "^6.1.3",
+    "tsx": "^4.23.5",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.18",
+    "vitest": "^4.1.10",
     "xo": "^1.2.3",
-    "yaml": "^2.8.2"
+    "yaml": "^2.9.0"
   },
   "packageManager": "pnpm@10.28.2+sha512.41872f037ad22f7348e3b1debbaf7e867cfd448f2726d9cf74c08f19507c31d2c8e7a11525b983febc2df640b5438dee6023ebb1f84ed43cc2d654d2bc326264",
   "peerDependencies": {
     "prisma": "^7.0.0"
   },
   "dependencies": {
-    "@prisma/generator-helper": "7.3.0",
-    "@prisma/internals": "^7.3.0",
-    "openapi3-ts": "^4.5.0",
+    "@prisma/generator-helper": "7.9.1",
+    "@prisma/internals": "^7.9.1",
+    "openapi3-ts": "^4.6.1",
     "winston": "^3.19.0"
   }
 }
